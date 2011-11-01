@@ -9,9 +9,9 @@ package proyecto2;
  *
  * @author Tono
  */
-public class AplicacionesInternet extends Cuenta {
+public class AppsInternet extends Cuenta {
     private String link;
-    public AplicacionesInternet(String titulo,String usuario, String pass,String link){
+    public AppsInternet(String titulo,String usuario, String pass,String link){
         super(titulo,usuario,pass);
     }
     public String getLink(){
