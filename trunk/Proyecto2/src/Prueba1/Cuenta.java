@@ -2,30 +2,37 @@
  *
  * @author Juan Pablo
  */
-import java.util.ArrayList;
 public class Cuenta {
-    private ArrayList<String> nombreCampos, campos;
+    private String[] nombreCampos, campos;
+    private int numCampo;
     
     public Cuenta()
     {
-        nombreCampos = new ArrayList<String>();
-        campos = new ArrayList<String>();
+        nombreCampos = new String[8];
+        campos = new String[8];
+        numCampo = 0;
     }
     
-    public ArrayList<String> getNombreCamp()
+    public String[] getNombreCamp()
     {
         return nombreCampos;
     }
     
-    public ArrayList<String> getCampos()
+    public String[] getCampos()
     {
         return campos;
     }
     
+    public int getNumCampo()
+    {
+        return numCampo;
+    }
+    
     public void addCampo(String nombre, String campo)
     {
-        nombreCampos.add(nombre);
-        campos.add(campo);
+        nombreCampos[numCampo] = nombre;
+        campos[numCampo] = campo;
+        numCampo+=1;
     }
     
 }
