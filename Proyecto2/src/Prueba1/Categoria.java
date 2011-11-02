@@ -1,14 +1,16 @@
+package Prueba1;
+
 /**
  *
  * @author Juan Pablo
  */
 import java.util.ArrayList;
-public class Categorias {
+public class Categoria implements java.io.Serializable{
     private String nombreCat;
     private int numCuentas;
     private ArrayList<Cuenta> cuentas;
     
-    public Categorias(String nombre){
+    public Categoria(String nombre){
         nombreCat = nombre;
         numCuentas = 0;
         cuentas = new ArrayList<Cuenta>();
