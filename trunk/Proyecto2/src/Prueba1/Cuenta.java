@@ -1,3 +1,5 @@
+package Prueba1;
+
 /**
  *
  * @author Juan Pablo
@@ -21,11 +23,6 @@ public class Cuenta {
     public String[] getCampos()
     {
         return campos;
-    }
-    
-    public int getNumCampo()
-    {
-        return numCampo;
     }
     
     public void addCampo(String nombre, String campo)

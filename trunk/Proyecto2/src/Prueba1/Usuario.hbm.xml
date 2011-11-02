@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/11/2011 10:55:59 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="proyecto2" name="Prueba1.Usuario" table="usuario">
+    <id name="usuarioId" type="java.lang.Short">
+      <column name="usuario_id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="usuario" type="string">
+      <column length="20" name="usuario"/>
+    </property>
+    <property name="contrasenia" type="string">
+      <column length="20" name="contrasenia"/>
+    </property>
+  </class>
+</hibernate-mapping>

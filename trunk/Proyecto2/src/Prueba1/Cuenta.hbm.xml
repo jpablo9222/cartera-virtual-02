@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/11/2011 10:55:59 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="proyecto2" name="Prueba1.Cuenta" table="cuenta">
+    <id name="cuentaId" type="java.lang.Short">
+      <column name="cuenta_id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="categoria" type="string">
+      <column length="15" name="categoria"/>
+    </property>
+    <property name="titulo" type="string">
+      <column length="15" name="titulo"/>
+    </property>
+    <property name="usuario" type="string">
+      <column length="10" name="usuario"/>
+    </property>
+    <property name="pass" type="string">
+      <column length="10" name="pass"/>
+    </property>
+    <property name="ce1" type="string">
+      <column length="10" name="ce1"/>
+    </property>
+    <property name="ce2" type="string">
+      <column length="10" name="ce2"/>
+    </property>
+    <property name="ce3" type="string">
+      <column length="10" name="ce3"/>
+    </property>
+    <property name="ce4" type="string">
+      <column length="10" name="ce4"/>
+    </property>
+    <property name="ce5" type="string">
+      <column length="10" name="ce5"/>
+    </property>
+    <property name="usuarioIdfk" type="java.lang.Short">
+      <column name="usuario_idfk"/>
+    </property>
+    <property name="categoriaIdfk" type="java.lang.Short">
+      <column name="categoria_idfk"/>
+    </property>
+  </class>
+</hibernate-mapping>

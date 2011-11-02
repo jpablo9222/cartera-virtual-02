@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/11/2011 10:55:59 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="proyecto2" name="Prueba1.Categoria" table="categoria">
+    <id name="categoriaId" type="java.lang.Short">
+      <column name="categoria_id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="nombreCat" type="string">
+      <column length="20" name="nombreCat"/>
+    </property>
+    <property name="numCuentas" type="java.lang.Integer">
+      <column name="numCuentas"/>
+    </property>
+  </class>
+</hibernate-mapping>
