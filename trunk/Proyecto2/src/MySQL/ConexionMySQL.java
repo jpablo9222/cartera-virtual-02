@@ -39,23 +39,50 @@ public class ConexionMySQL {
         }
     }
     
-   public ResultSet consultar(String tabla, String campo) throws SQLException
+   public ResultSet mostrarT(String categoria) throws SQLException
    {
-        rs = stm.executeQuery("SELECT * FROM " + tabla);
-        return rs;
+       rs = stm.executeQuery("SELECT * FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%'" );
+       return rs;
+   }
+    
+   public ResultSet mostrar(String categoria) throws SQLException
+   {
+       rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id WHERE Categoria.nombreCat = '"+categoria+"' LIMIT 1");
+       return rs;
+   }
+   
+   public ResultSet buscarTitulo(String titulo) throws SQLException
+   {
+       try{
+           rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta WHERE titulo = '"+ titulo +"'");
+       }catch(SQLException ex){System.out.println(ex);}
+       return rs;
+   }
+   
+   public int verificar(String categoria) throws SQLException
+   {
+       int count = 0;
+       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat = '"+categoria+"' LIMIT 1");
+       rs.next();
+       for (int i=1; i<=7; i++){
+           if (rs.getString(i)!=null){
+               count++;
+           }
+       }
+       return count;
+   }
+   
+   public void insertar(String categoria) 
+   {
+        try {
+            stm.execute("INSERT INTO Cuenta (nombre, contraseña) VALUES ('" + usuario.get("nombre") + "','" + usuario.get("contraseña") + "')");            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
    }
    
    /**
-    *  public String buscarNombre(String tabla, String nombre) throws SQLException
-   {
-       String name = null;
-       try{
-       rs = stm.executeQuery("SELECT * FROM " + tabla + " WHERE nombre = '"+ nombre +"' LIMIT 1");
-       rs.next();
-       name = rs.getString(2);
-       }catch(SQLException ex){System.out.println(ex);}
-       return name;
-   }
+    *  
    
    public void insertar(Hashtable usuario) 
    {
