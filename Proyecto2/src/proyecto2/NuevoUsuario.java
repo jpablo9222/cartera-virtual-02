@@ -147,7 +147,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             pass2+=jPasswordField2.getPassword()[s];
         }
         if(pass1.equals(pass2)){
-            Cuenta cuenta=new Cuenta("Super", jLabel1.getText(),jPasswordField1.getPassword().toString());
+            Cuenta cuenta=new Cuenta("Super", nombreUsuario.getText(),pass1);
             usuarioContrasena.add(cuenta);
             JOptionPane.showMessageDialog(null, "La cuenta fue agregada exitosamente", "Felicitaciones", -1);
             this.setVisible(false);

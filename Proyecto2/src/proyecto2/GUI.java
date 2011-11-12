@@ -11,6 +11,7 @@
 package proyecto2;
 import javax.swing.ListSelectionModel;
 import java.util.ArrayList;
+import javax.swing.*;
 /**
  *
  * @author Tono
@@ -140,6 +141,11 @@ public class GUI extends javax.swing.JFrame {
         jMenu1.add(jMenuItem4);
 
         jMenuItem3.setText("Cerrar Sesion");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -177,6 +183,11 @@ private void categoriasMenuActionPerformed(java.awt.event.ActionEvent evt) {//GE
 private void nuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCuentaActionPerformed
     
 }//GEN-LAST:event_nuevaCuentaActionPerformed
+
+private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    System.exit(0);
+    VentanaPrincipal.setAcceso(false);
+}//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public static void main(String args[]) {
         try {

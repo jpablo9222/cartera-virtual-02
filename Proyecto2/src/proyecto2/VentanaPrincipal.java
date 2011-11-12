@@ -16,13 +16,13 @@ package proyecto2;
  */
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JFrame;
 public class VentanaPrincipal extends javax.swing.JFrame {
-    boolean acceso=false, usuarioCorrecto=false;
-    ArrayList<Cuenta> usuarioContrasena;
+    static boolean acceso=false, usuarioCorrecto=false;
+    ArrayList<Cuenta> usuarioContrasena=new ArrayList();
     /** Creates new form NuevaCuenta */
     public VentanaPrincipal(ArrayList<Cuenta> cuentas) {
         usuarioContrasena=cuentas;
+        System.out.println(cuentas.get(0).getUsuario());
         initComponents();
     }
     /** This method is called from within the constructor to
@@ -155,7 +155,10 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         }
     }
 }//GEN-LAST:event_jButton2ActionPerformed
-
+public static void setAcceso(boolean x){
+    acceso=x;
+    new GUI().setVisible(x);
+}
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     nombreUsuario.setText("");
     password.setText("");
