@@ -41,7 +41,7 @@ public class ConexionMySQL {
     
    public ResultSet mostrarT(String categoria) throws SQLException
    {
-       rs = stm.executeQuery("SELECT * FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%'" );
+       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%'" );
        return rs;
    }
     
@@ -65,7 +65,7 @@ public class ConexionMySQL {
        rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat = '"+categoria+"' LIMIT 1");
        rs.next();
        for (int i=1; i<=7; i++){
-           if (rs.getString(i)!=null){
+           if (!rs.getString(i).equals("")){
                count++;
            }
        }
@@ -75,7 +75,7 @@ public class ConexionMySQL {
    public void insertar(String categoria) 
    {
         try {
-            stm.execute("INSERT INTO Cuenta (nombre, contraseña) VALUES ('" + usuario.get("nombre") + "','" + usuario.get("contraseña") + "')");            
+            stm.execute("INSERT INTO Cuenta () VALUES ('" + usuario.get("nombre") + "','" + usuario.get("contraseña") + "')");            
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -83,15 +83,6 @@ public class ConexionMySQL {
    
    /**
     *  
-   
-   public void insertar(Hashtable usuario) 
-   {
-        try {
-            stm.execute("INSERT INTO usuarios (nombre, contraseña) VALUES ('" + usuario.get("nombre") + "','" + usuario.get("contraseña") + "')");            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-   }
    
    public void actualizar(String tabla, Hashtable usuario, String nombre)
     {
