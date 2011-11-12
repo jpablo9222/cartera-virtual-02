@@ -4,12 +4,19 @@ package MySQL;
  *
  * @author Juan Pablo
  */
+import java.sql.*;
 public class GUICartera extends javax.swing.JFrame {
     private static String[] campos = new String[7];
+    private ConexionMySQL sql;
+    private ResultSet rs;
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
-        
+        sql = new ConexionMySQL("localhost","root","pass","proyecto2");
+        sql.conectar();
+        try{
+            rs = sql.mostrarT(null);
+        }catch (SQLException e){} 
     }
     
     public static String[] getCampos()
@@ -149,6 +156,11 @@ public class GUICartera extends javax.swing.JFrame {
         jMenu9.setText("Categoria");
 
         jMenuItem7.setText("Nueva Categoria");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu9.add(jMenuItem7);
 
         jMenuItem8.setText("Agregar Campo");
@@ -183,6 +195,10 @@ public class GUICartera extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        new InsertarCategoria().setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
