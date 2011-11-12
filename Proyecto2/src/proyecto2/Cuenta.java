@@ -24,6 +24,9 @@ public class Cuenta {
     public String getPass(){
         return contrasena;
     }
+    public void setContrasena(String pass){
+        contrasena=pass;
+    }
     public void agregarCampo(String nombre, String valor){
         
     }
