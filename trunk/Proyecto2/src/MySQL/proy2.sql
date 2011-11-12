@@ -1,15 +1,11 @@
-DROP TABLE IF EXISTS Cuenta;
-DROP TABLE IF EXISTS Usuario;
-DROP TABLE IF EXISTS Categoria;
-
-CREATE TABLE Usuario (
+CREATE TABLE IF NOT EXISTS Usuario (
        usuario_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
        usuario VARCHAR (15),
        contrasenia VARCHAR (15),
        PRIMARY KEY (usuario_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE Categoria (
+CREATE TABLE IF NOT EXISTS Categoria (
        categoria_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
        nombreCat VARCHAR(30),
        tc1 VARCHAR (15),
@@ -22,7 +18,7 @@ CREATE TABLE Categoria (
        PRIMARY KEY (categoria_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE Cuenta (
+CREATE TABLE IF NOT EXISTS Cuenta (
        cuenta_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
        user_id SMALLINT UNSIGNED NOT NULL,
        cat_id SMALLINT UNSIGNED NOT NULL,
@@ -34,7 +30,6 @@ CREATE TABLE Cuenta (
        c5 VARCHAR (15),
        c6 VARCHAR (15),
        c7 VARCHAR (15),
-       c8 VARCHAR (15),
        PRIMARY KEY (cuenta_id)
 )ENGINE=InnoDB;
 
