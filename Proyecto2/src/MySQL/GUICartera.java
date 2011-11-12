@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * GUICartera.java
- *
- * Created on 11/11/2011, 11:32:03 PM
- */
 package MySQL;
 
 /**
