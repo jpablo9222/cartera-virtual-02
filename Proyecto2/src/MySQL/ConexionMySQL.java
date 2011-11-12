@@ -51,12 +51,22 @@ public class ConexionMySQL {
        return rs;
    }
    
-   public ResultSet buscarTitulo(String titulo) throws SQLException
+   public ResultSet buscarTitulo(String titulo, String usuario) throws SQLException
    {
        try{
-           rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta WHERE titulo = '"+ titulo +"'");
+           rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+ titulo +"' AND Usuario.usuario = '"+ usuario +"'");
        }catch(SQLException ex){System.out.println(ex);}
        return rs;
+   }
+   
+   public String login(String user, String pass) throws SQLException
+   {
+       rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = ' LIMIT 1");
+       if (rs.next()){
+           return user;
+       } else {
+           return "";
+       }
    }
    
    public int verificar(String categoria) throws SQLException
@@ -72,34 +82,43 @@ public class ConexionMySQL {
        return count;
    }
    
-   public void insertar(String categoria) 
+   public void insertarCuenta(String categoria, String usuario, String titulo, String c1, String c2, String c3, String c4, String c5, String c6, String c7) throws SQLException
    {
-        try {
-            stm.execute("INSERT INTO Cuenta () VALUES ('" + usuario.get("nombre") + "','" + usuario.get("contraseña") + "')");            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+        ResultSet rsU = stm.executeQuery("SELECT usuario_id FROM Usuario WHERE usuario = '"+ usuario +"' LIMIT 1");
+        rsU.next();
+        int u = rsU.getInt(1);
+        ResultSet rsC = stm.executeQuery("SELECT categoria_id FROM Categoria WHERE nombreCat = '"+ categoria +"' LIMIT 1");
+        rsC.next();
+        int c = rsC.getInt(1);
+        
+        stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",,"+ titulo +","+ c1 +","+ c2 +","+ c3 +","+ c4 +","+ c5 +","+ c6 +","+ c7 +")"); 
    }
    
-   /**
-    *  
+   public void insertarCategoria(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7) throws SQLException
+   {
+       stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ("+ nombre +","+ tc1 +","+ tc2 +","+ tc3 +","+ tc4 +","+ tc5 +","+ tc6 +","+ tc7 +")");
+   }
    
-   public void actualizar(String tabla, Hashtable usuario, String nombre)
+   public void insertarUsuario(String user, String pass) throws SQLException
+   {
+       stm.execute("INSERT INTO Usuario (usuario,contrasenia) VALUES ("+ user +","+ pass +")");
+   }
+   
+   public void actualizarPass(String user, String pass)
     {
         try {
-            stm.execute("UPDATE " + tabla + " SET nombre='" + usuario.get("nombre") + "' WHERE nombre='" + nombre + "'");
+            stm.execute("UPDATE Usuario SET contrasenia = '" + pass + "' WHERE usuario = "+ user +" ");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
    
-   public void eliminar(String tabla, String nombre) 
+   public void eliminarCartera(String user) 
    {
         try {
-            stm.execute("DELETE FROM " + tabla + " WHERE nombre='" + nombre + "'");
+            stm.execute("DELETE Cuenta FROM Cuenta JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id  WHERE Usuario.usuario = '" + user + "'");
         } catch (SQLException ex) {
             System.out.println(ex);
         }
    }
-    */
 }
