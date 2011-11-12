@@ -14,13 +14,17 @@ package proyecto2;
  *
  * @author Tono
  */
-public class NuevaCuenta extends javax.swing.JFrame {
-
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+public class VentanaPrincipal extends javax.swing.JFrame {
+    boolean acceso=false, usuarioCorrecto=false;
+    ArrayList<Cuenta> usuarioContrasena;
     /** Creates new form NuevaCuenta */
-    public NuevaCuenta() {
+    public VentanaPrincipal(ArrayList<Cuenta> cuentas) {
+        usuarioContrasena=cuentas;
         initComponents();
     }
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -42,6 +46,11 @@ public class NuevaCuenta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -55,6 +64,11 @@ public class NuevaCuenta extends javax.swing.JFrame {
         jLabel2.setText("Contraseña:");
 
         jButton3.setText("Nueva Cuenta");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,10 +129,43 @@ public class NuevaCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    if(nombreUsuario!=null && password!=null){
-        
+    if(nombreUsuario.getText()!=null && password.getPassword()!=null){
+        String nombrex,passwordx;
+        for(int x=0;x<usuarioContrasena.size();x++){
+            nombrex=usuarioContrasena.get(x).getUsuario();
+            if (nombrex.equals(nombreUsuario.getText())){
+                usuarioCorrecto=true;
+                String pass=new String();
+                for(int s=0;s<password.getPassword().length;s++){
+                    pass+=password.getPassword()[s];
+                }
+                if (pass.equals(usuarioContrasena.get(x).getPass())){
+                    acceso=true;
+                    new GUI().setVisible(acceso);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "La contraseña no coinciede con el usuario", "Error", -1);
+                }
+                
+            }
+            
+        }
+        if(!usuarioCorrecto){
+            JOptionPane.showMessageDialog(null,"El usuario no existe","Error",-1);
+        }
     }
 }//GEN-LAST:event_jButton2ActionPerformed
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    nombreUsuario.setText("");
+    password.setText("");
+}//GEN-LAST:event_jButton1ActionPerformed
+
+private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    new NuevoUsuario().setVisible(true);
+    
+  
+}//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,21 +184,22 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NuevaCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NuevaCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NuevaCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NuevaCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
-                new NuevaCuenta().setVisible(true);
+                new VentanaPrincipal(NuevoUsuario.getCuentas()).setVisible(true);
             }
         });
     }
