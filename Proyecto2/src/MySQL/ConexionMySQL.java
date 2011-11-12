@@ -8,7 +8,6 @@ import java.sql.*;
 public class ConexionMySQL {
     private String user;
     private String password;
-    private String db;
     private String url;
     private Connection conexion = null;
     private Statement stm;
@@ -18,7 +17,6 @@ public class ConexionMySQL {
     {
         this.user = usuario;
         this.password = contraseña;
-        this.db = bd;
         this.url = "jdbc:mysql://" + server + "/" + bd;
     }
     
