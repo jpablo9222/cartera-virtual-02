@@ -39,7 +39,7 @@ public class ConexionMySQL {
     
    public ResultSet mostrarT(String categoria) throws SQLException
    {
-       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%'" );
+       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%' LIMIT 1");
        return rs;
    }
     
