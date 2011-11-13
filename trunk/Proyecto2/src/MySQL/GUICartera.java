@@ -14,7 +14,7 @@ public class GUICartera extends javax.swing.JFrame {
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
-        jComboBox1.s
+        jComboBox1.setModel(null);
         sql = new ConexionMySQL("localhost","root","pass","proyecto2");
         sql.conectar();
         try{
@@ -102,7 +102,7 @@ public class GUICartera extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cuentas");
