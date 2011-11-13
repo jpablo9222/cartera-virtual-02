@@ -14,12 +14,28 @@ public class GUICartera extends javax.swing.JFrame {
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
+        jComboBox1.s
         sql = new ConexionMySQL("localhost","root","pass","proyecto2");
         sql.conectar();
         try{
-            rs = sql.mostrarT("Aplicaciones de Internet");
-            modelo.addColumn("Titulo");
-            modelo.addColumn(rs.getString(1));
+            int columnas = sql.verificar("Aplicaciones de Internet");
+            String[] titulos = sql.mostrarT("Aplicaciones de Internet");
+            for (int i=0; i<=titulos.length-1; i++){
+                modelo.addColumn(titulos[i]);
+            }
+            rs = sql.mostrar("Aplicaciones de Internet");
+            while (rs.next())
+            {
+                // Se crea un array que será una de las filas de la tabla.
+                Object [] fila = new Object[columnas+1]; // Hay tres columnas en la tabla
+
+                // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
+                for (int i=0;i<(columnas+1);i++)
+                fila[i] = rs.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
+
+                // Se añade al modelo la fila completa.
+               modelo.addRow(fila);
+            }
         }catch (SQLException e){} 
         jTable1.setModel(modelo);
     }
