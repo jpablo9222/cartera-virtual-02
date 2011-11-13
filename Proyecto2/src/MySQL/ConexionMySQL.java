@@ -5,6 +5,7 @@ package MySQL;
  * @author Juan Pablo
  */
 import java.sql.*;
+import java.util.ArrayList;
 public class ConexionMySQL {
     private String user;
     private String password;
@@ -37,10 +38,17 @@ public class ConexionMySQL {
         }
     }
     
-   public ResultSet mostrarT(String categoria) throws SQLException
+   public String[] mostrarT(String categoria) throws SQLException
    {
+       int columnas = this.verificar(categoria);
        rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%' LIMIT 1");
-       return rs;
+       rs.next();
+       String[] titulos = new String[columnas+1];
+       titulos[0]="Titulo";
+       for (int i=1; i<=columnas; i++){
+           titulos[i] = rs.getString(i);
+       }
+       return titulos;
    }
     
    public ResultSet mostrar(String categoria) throws SQLException
