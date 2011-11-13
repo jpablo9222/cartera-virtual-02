@@ -5,18 +5,23 @@ package MySQL;
  * @author Juan Pablo
  */
 import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 public class GUICartera extends javax.swing.JFrame {
     private static String[] campos = new String[7];
     private ConexionMySQL sql;
     private ResultSet rs;
+    private DefaultTableModel modelo = new DefaultTableModel();
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
         sql = new ConexionMySQL("localhost","root","pass","proyecto2");
         sql.conectar();
         try{
-            rs = sql.mostrarT(null);
+            rs = sql.mostrarT("Aplicaciones de Internet");
+            modelo.addColumn("Titulo");
+            modelo.addColumn(rs.getString(1));
         }catch (SQLException e){} 
+        jTable1.setModel(modelo);
     }
     
     public static String[] getCampos()
