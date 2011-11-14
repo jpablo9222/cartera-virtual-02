@@ -9,8 +9,6 @@
  * Created on Nov 7, 2011, 4:52:48 PM
  */
 package proyecto2;
-import javax.swing.ListSelectionModel;
-import java.util.ArrayList;
 import javax.swing.*;
 /**
  *
@@ -186,7 +184,7 @@ private void nuevaCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 
 private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
     System.exit(0);
-    VentanaPrincipal.setAcceso(false);
+    new VentanaPrincipal(NuevoUsuario.getCuentas()).setVisible(true);
 }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public static void main(String args[]) {
