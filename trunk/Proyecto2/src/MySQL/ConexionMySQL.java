@@ -82,6 +82,16 @@ public class ConexionMySQL {
        return categoria;
    }
    
+   public String getCategoria(String titulo, String usuario) throws SQLException
+   {
+       rs = stm.executeQuery("SELECT nombreCat FROM Categoria JOIN Cuenta ON Cuenta.categoria_id=Categoria.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+titulo+"' AND Usuario.usuario = '"+usuario+"'");    
+       if (rs != null && rs.next()){
+           return rs.getString(1);
+       } else {
+           return "";
+       }
+   }
+   
    /**
     * Método que Devuelve los Registros Asociados a una Categoria y un Usuario Especificos
     * @param categoria
