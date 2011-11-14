@@ -13,6 +13,7 @@ public class IngresarUsuario extends javax.swing.JFrame {
     public IngresarUsuario() {
         initComponents();
         sql = GUICartera.getConexion();  
+        jPasswordField2.setText("");
     }
 
     /** This method is called from within the constructor to
