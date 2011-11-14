@@ -61,9 +61,9 @@ public class ConexionMySQL {
        return categoria;
    }
    
-   public ResultSet mostrar(String categoria) throws SQLException
+   public ResultSet mostrar(String categoria, String usuario) throws SQLException
    {
-       rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id WHERE Categoria.nombreCat = '"+categoria+"' LIMIT 1");
+       rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Categoria.nombreCat = '"+categoria+"' AND Usuario.usuario = '"+usuario+"'");
        return rs;
    }
    
@@ -77,8 +77,8 @@ public class ConexionMySQL {
    
    public String login(String user, String pass) throws SQLException
    {
-       rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = ' LIMIT 1");
-       if (rs.next()){
+       rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = '"+pass+"' LIMIT 1");
+       if (rs != null && rs.next()){
            return user;
        } else {
            return "";

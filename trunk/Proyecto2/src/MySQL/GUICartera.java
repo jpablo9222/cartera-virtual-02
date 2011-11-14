@@ -28,7 +28,7 @@ public class GUICartera extends javax.swing.JFrame {
                 jComboBox1.addItem(categorias.get(i)); 
             }
         }catch (SQLException e){}
-         new Login(this).setVisible(true);
+        new Login(this).setVisible(true);
     }
     
     public static void setUsuario(String user){
@@ -157,6 +157,11 @@ public class GUICartera extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Cerrar Sesión");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -225,7 +230,7 @@ public class GUICartera extends javax.swing.JFrame {
             for (int i=0; i<=titulos.length-1; i++){
                 modelo.addColumn(titulos[i]);
             }
-            rs = sql.mostrar(index);
+            rs = sql.mostrar(index,usuario1);
             while (rs.next())
             {
                 // Se crea un array que será una de las filas de la tabla.
@@ -243,6 +248,11 @@ public class GUICartera extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         new InsertarCategoria().setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        this.setVisible(false);
+        new Login(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
