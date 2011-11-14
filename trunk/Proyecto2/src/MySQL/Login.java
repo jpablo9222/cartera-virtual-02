@@ -16,6 +16,7 @@ public class Login extends javax.swing.JFrame {
     public Login(GUICartera cartera) {
         initComponents();
         sql = GUICartera.getConexion();  
+        jPasswordField1.setText("");
         this.cartera = cartera;
     }
 
