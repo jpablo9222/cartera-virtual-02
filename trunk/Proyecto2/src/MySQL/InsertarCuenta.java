@@ -37,14 +37,6 @@ public class InsertarCuenta extends javax.swing.JFrame {
             for (int i=0; i<categorias.size(); i++){
                 jComboBox1.addItem(categorias.get(i)); 
             }
-            String index = ""+jComboBox1.getItemAt(0);
-            int columnas = sql.verificar(index);
-            String[] titulos = sql.mostrarT(index);
-            for (int i=0; i<=titulos.length-1; i++){
-                textField[i].setVisible(true);
-                labels[i].setVisible(true);
-                labels[i+1].setText(titulos[i]);
-            }
         } catch (SQLException e){}
     }
 
@@ -82,20 +74,39 @@ public class InsertarCuenta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Título");
 
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("jLabel1");
 
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("jLabel1");
 
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("jLabel1");
 
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("jLabel1");
 
+        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("jLabel1");
 
+        jLabel7.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("jLabel1");
 
+        jLabel8.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("jLabel1");
 
         jButton1.setText("Aceptar");
@@ -112,6 +123,8 @@ public class InsertarCuenta extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Categoría");
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +133,9 @@ public class InsertarCuenta extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Nueva Cuenta");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -240,7 +255,16 @@ public class InsertarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        try{
+            String index = ""+jComboBox1.getItemAt(0);
+            int columnas = sql.verificar(index);
+            String[] titulos = sql.mostrarT(index);
+            for (int i=0; i<=titulos.length-1; i++){
+                textField[i].setVisible(true);
+                labels[i].setVisible(true);
+                labels[i].setText(titulos[i]);
+            }
+        } catch (SQLException e){}
     }//GEN-LAST:event_jComboBox1ActionPerformed
     
     /**
