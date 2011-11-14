@@ -50,7 +50,17 @@ public class ConexionMySQL {
        }
        return titulos;
    }
-    
+   
+   public ArrayList<String> getCategoria() throws SQLException
+   {
+       ArrayList<String> categoria = new ArrayList<String>();
+       rs = stm.executeQuery("SELECT nombreCat FROM Categoria");
+       while (rs.next()){
+           categoria.add(rs.getString(1));
+       }
+       return categoria;
+   }
+   
    public ResultSet mostrar(String categoria) throws SQLException
    {
        rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id WHERE Categoria.nombreCat = '"+categoria+"' LIMIT 1");

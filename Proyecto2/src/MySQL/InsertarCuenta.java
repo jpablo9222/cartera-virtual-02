@@ -4,10 +4,33 @@ package MySQL;
  *
  * @author Juan Pablo
  */
+import javax.swing.JTextField;
+import java.sql.*;
+import java.util.ArrayList;
 public class InsertarCuenta extends javax.swing.JFrame {
+    private ConexionMySQL sql;
+    private String usuario;
+    JTextField[] textField = new JTextField[8];
     /** Creates new form InsertarCuenta */
     public InsertarCuenta() {
         initComponents();
+        sql = GUICartera.getConexion();
+        usuario = GUICartera.getUsuario();
+        textField[0] = jTextField1;
+        textField[1] = jTextField2;
+        textField[2] = jTextField3;
+        textField[3] = jTextField4;
+        textField[4] = jTextField5;
+        textField[5] = jTextField6;
+        textField[6] = jTextField7;
+        textField[7] = jTextField8;
+        try{
+            ArrayList<String> categorias = sql.getCategoria();
+            for (int i=0; i<categorias.size(); i++){
+                jComboBox1.addItem(categorias.get(i)); 
+            }
+            String index = ""+jComboBox1.getItemAt(0);
+        } catch (SQLException e){}
     }
 
     /** This method is called from within the constructor to
@@ -76,9 +99,7 @@ public class InsertarCuenta extends javax.swing.JFrame {
 
         jLabel10.setText("Categoría");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aplicaciones de Internet", "Productos Informaticos", "Membresias/Suscripciones", "Dispositivos Electronicos" }));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel9.setText("Nueva Cuenta");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -118,17 +139,20 @@ public class InsertarCuenta extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)))
                 .addGap(34, 34, 34))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel9)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
@@ -190,14 +214,10 @@ public class InsertarCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GUICartera.getCampos()[0] = this.jTextField1.getText();
-        GUICartera.getCampos()[1] = this.jTextField2.getText();
-        GUICartera.getCampos()[2] = this.jTextField3.getText();
-        GUICartera.getCampos()[3] = this.jTextField4.getText();
-        GUICartera.getCampos()[4] = this.jTextField5.getText();
-        GUICartera.getCampos()[5] = this.jTextField6.getText();
-        GUICartera.getCampos()[6] = this.jTextField7.getText();
-        GUICartera.getCampos()[7] = this.jTextField8.getText();
+        String categoria = ""+jComboBox1.getSelectedItem();
+        try{
+            sql.insertarCuenta(categoria, usuario, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), jTextField7.getText(), jTextField8.getText());
+        }catch(SQLException e){}
     }//GEN-LAST:event_jButton1ActionPerformed
     
     /**

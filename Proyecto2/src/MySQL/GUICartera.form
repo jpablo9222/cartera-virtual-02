@@ -201,12 +201,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Aplicaciones de Internet"/>
-                <StringItem index="1" value="Productos Informaticos"/>
-                <StringItem index="2" value="Membresias/Suscripciones"/>
-                <StringItem index="3" value="Dispositivos Electronicos"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Categorias"/>
           </Properties>

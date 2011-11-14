@@ -6,38 +6,55 @@ package MySQL;
  */
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 public class GUICartera extends javax.swing.JFrame {
     private static String[] campos = new String[7];
     private ConexionMySQL sql;
+    private static ConexionMySQL sql1;
     private ResultSet rs;
+    private String usuario;
+    private static String usuario1;
     private DefaultTableModel modelo = new DefaultTableModel();
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
-        jComboBox1.setModel(null);
         sql = new ConexionMySQL("localhost","root","pass","proyecto2");
         sql.conectar();
+        usuario1 = usuario;
+        sql1 = sql;
         try{
-            int columnas = sql.verificar("Aplicaciones de Internet");
-            String[] titulos = sql.mostrarT("Aplicaciones de Internet");
+            ArrayList<String> categorias = sql.getCategoria();
+            for (int i=0; i<categorias.size(); i++){
+                jComboBox1.addItem(categorias.get(i)); 
+            }
+            String index = ""+jComboBox1.getItemAt(0);
+            jComboBox1.getSelectedItem();
+            int columnas = sql.verificar(index);
+            String[] titulos = sql.mostrarT(index);
             for (int i=0; i<=titulos.length-1; i++){
                 modelo.addColumn(titulos[i]);
             }
-            rs = sql.mostrar("Aplicaciones de Internet");
+            rs = sql.mostrar(index);
             while (rs.next())
             {
                 // Se crea un array que será una de las filas de la tabla.
                 Object [] fila = new Object[columnas+1]; // Hay tres columnas en la tabla
-
                 // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
                 for (int i=0;i<(columnas+1);i++)
-                fila[i] = rs.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
-
+                fila[i] = rs.getObject(i+1); 
                 // Se añade al modelo la fila completa.
                modelo.addRow(fila);
             }
         }catch (SQLException e){} 
         jTable1.setModel(modelo);
+    }
+    
+    public static ConexionMySQL getConexion(){
+        return sql1;
+    }
+    
+    public static String getUsuario(){
+        return usuario1;
     }
     
     public static String[] getCampos()
@@ -107,7 +124,6 @@ public class GUICartera extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cuentas");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aplicaciones de Internet", "Productos Informaticos", "Membresias/Suscripciones", "Dispositivos Electronicos" }));
         jComboBox1.setToolTipText("Categorias");
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
