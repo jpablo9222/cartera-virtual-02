@@ -37,7 +37,8 @@ public class Login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ingreso");
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,10 +136,9 @@ public class Login extends javax.swing.JFrame {
         char[] pas = jPasswordField1.getPassword();
         String pass = "";
         for (int i=0;i<pas.length;i++){
-            pass+=pas[i];
+            pass+=""+pas[i];
         }
         try{
-            System.out.println(pass);
             usuario = sql.login(jTextField1.getText(), pass);
         } catch (SQLException e){}
         if (usuario.equals("")){
