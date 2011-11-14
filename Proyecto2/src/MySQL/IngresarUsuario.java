@@ -1,24 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * IngresarUsuario.java
- *
- * Created on 13/11/2011, 10:53:54 PM
- */
 package MySQL;
 
 /**
  *
  * @author Juan Pablo
  */
+import java.util.Arrays;
+import java.sql.*;
+import javax.swing.JOptionPane;
 public class IngresarUsuario extends javax.swing.JFrame {
-
+    private ConexionMySQL sql;
     /** Creates new form IngresarUsuario */
     public IngresarUsuario() {
         initComponents();
+        sql = GUICartera.getConexion();  
     }
 
     /** This method is called from within the constructor to
@@ -64,11 +58,14 @@ public class IngresarUsuario extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Ingrese Contraseña Nuevamente");
 
-        jPasswordField1.setText("jPasswordField1");
-
         jPasswordField2.setText("jPasswordField2");
 
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
 
@@ -136,6 +133,31 @@ public class IngresarUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean iguales;
+        char[] p1 = jPasswordField1.getPassword();
+        char[] p2 = jPasswordField2.getPassword();
+        if (p1.length != p2.length) {
+            iguales = false;
+        } else {
+            iguales = Arrays.equals(p1,p2);
+        }
+        if (iguales){
+            try{
+                sql.insertarUsuario(jTextField1.getText(), null);
+                String pass = "";
+                for (int i=0;i<p1.length;i++){
+                    pass+=""+p1[i];
+                }
+            } catch (SQLException e){}
+        }else{
+            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+            jTextField1.setText("");
+            jPasswordField1.setText("");
+            jPasswordField2.setText("");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
