@@ -12,7 +12,9 @@ public class Login extends javax.swing.JFrame {
     private String usuario;
     private GUICartera cartera;
     private static GUICartera aja;
-    /** Creates new form Login */
+    /** Creates new form Login
+     * @param cartera 
+     */
     public Login(GUICartera cartera) {
         initComponents();
         sql = GUICartera.getConexion();  

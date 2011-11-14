@@ -31,22 +31,30 @@ public class GUICartera extends javax.swing.JFrame {
         new Login(this).setVisible(true);
     }
     
+    /**
+     * Método que Establece el Usuario del Programa
+     * @param user
+     */
     public static void setUsuario(String user){
         usuario1 = user;
     }
     
+    /**
+     * Método que Devuelve la Conexion a MySQL utilizada 
+     * @return
+     */
     public static ConexionMySQL getConexion(){
         return sql1;
     }
     
+    /**
+     * Método que Devuelve el Usuario Actual del Programa
+     * @return
+     */
     public static String getUsuario(){
         return usuario1;
     }
     
-    public static String[] getCampos()
-    {
-        return campos;
-    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
