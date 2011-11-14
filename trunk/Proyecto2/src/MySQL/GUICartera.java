@@ -28,6 +28,11 @@ public class GUICartera extends javax.swing.JFrame {
                 jComboBox1.addItem(categorias.get(i)); 
             }
         }catch (SQLException e){}
+         new Login(this).setVisible(true);
+    }
+    
+    public static void setUsuario(String user){
+        usuario1 = user;
     }
     
     public static ConexionMySQL getConexion(){
@@ -270,7 +275,7 @@ public class GUICartera extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new GUICartera().setVisible(true);
+                new GUICartera().setVisible(false);
             }
         });
     }
