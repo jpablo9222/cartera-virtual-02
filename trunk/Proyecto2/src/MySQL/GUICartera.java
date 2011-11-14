@@ -14,7 +14,7 @@ public class GUICartera extends javax.swing.JFrame {
     private ResultSet rs;
     private String usuario;
     private static String usuario1;
-    private DefaultTableModel modelo = new DefaultTableModel();
+    private DefaultTableModel modelo;
     /** Creates new form GUICartera */
     public GUICartera() {
         initComponents();
@@ -27,26 +27,7 @@ public class GUICartera extends javax.swing.JFrame {
             for (int i=0; i<categorias.size(); i++){
                 jComboBox1.addItem(categorias.get(i)); 
             }
-            String index = ""+jComboBox1.getItemAt(0);
-            jComboBox1.getSelectedItem();
-            int columnas = sql.verificar(index);
-            String[] titulos = sql.mostrarT(index);
-            for (int i=0; i<=titulos.length-1; i++){
-                modelo.addColumn(titulos[i]);
-            }
-            rs = sql.mostrar(index);
-            while (rs.next())
-            {
-                // Se crea un array que será una de las filas de la tabla.
-                Object [] fila = new Object[columnas+1]; // Hay tres columnas en la tabla
-                // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-                for (int i=0;i<(columnas+1);i++)
-                fila[i] = rs.getObject(i+1); 
-                // Se añade al modelo la fila completa.
-               modelo.addRow(fila);
-            }
-        }catch (SQLException e){} 
-        jTable1.setModel(modelo);
+        }catch (SQLException e){}
     }
     
     public static ConexionMySQL getConexion(){
@@ -230,7 +211,28 @@ public class GUICartera extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+        modelo = new DefaultTableModel();
+        try{
+            String index = ""+jComboBox1.getItemAt(0);
+            jComboBox1.getSelectedItem();
+            int columnas = sql.verificar(index);
+            String[] titulos = sql.mostrarT(index);
+            for (int i=0; i<=titulos.length-1; i++){
+                modelo.addColumn(titulos[i]);
+            }
+            rs = sql.mostrar(index);
+            while (rs.next())
+            {
+                // Se crea un array que será una de las filas de la tabla.
+                Object [] fila = new Object[columnas+1]; // Hay tres columnas en la tabla
+                // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
+                for (int i=0;i<(columnas+1);i++)
+                fila[i] = rs.getObject(i+1); 
+                // Se añade al modelo la fila completa.
+               modelo.addRow(fila);
+            }
+        }catch (SQLException e){} 
+        jTable1.setModel(modelo);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
