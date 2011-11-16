@@ -139,6 +139,16 @@ public class ConexionMySQL {
        }
    }
    
+   public String getPass(String user) throws SQLException
+   {
+       rs = stm.executeQuery("SELECT contrasenia FROM Usuario WHERE usuario = '"+ user +"' LIMIT 1");
+       if (rs != null && rs.next()){
+           return rs.getString(1);
+       } else {
+           return "";
+       }
+   }
+   
    /**
     * Método que Verifica Cuantos Campos Utiliza una Categoria en Especifico
     * @param categoria

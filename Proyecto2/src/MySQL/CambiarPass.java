@@ -14,11 +14,17 @@ package MySQL;
  *
  * @author Juan Pablo
  */
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+import java.sql.*;
 public class CambiarPass extends javax.swing.JFrame {
-
+    private ConexionMySQL sql;
+    private String usuario;
     /** Creates new form CambiarPass */
     public CambiarPass() {
         initComponents();
+        sql = GUICartera.getConexion();
+        usuario = GUICartera.getUsuario();
     }
 
     /** This method is called from within the constructor to
@@ -67,11 +73,6 @@ public class CambiarPass extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -147,13 +148,46 @@ public class CambiarPass extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        boolean iguales;         char[] p1 = jPasswordField1.getPassword();         char[] p2 = jPasswordField2.getPassword();         if (p1.length != p2.length) {             iguales = false;         } else {             iguales = Arrays.equals(p1, p2);         }         if (iguales) {             sql.eliminarCartera(usuario);             this.dispose();         } else {             JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);             jPasswordField1.setText("");             jPasswordField2.setText("");         }     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        this.dispose();     }//GEN-LAST:event_jButton2ActionPerformed
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    boolean iguales;
+        char[] p1 = jPasswordField1.getPassword();
+        char[] p2 = jPasswordField2.getPassword();
+        char[] p3 = jPasswordField3.getPassword();
+        String pass1 = "";
+        if (p2.length != p3.length) {
+            iguales = false;
+        } else {
+            iguales = Arrays.equals(p2,p3);
+        }
+        if (iguales){
+                String pass = "";
+                String passNueva = "";
+                for (int i=0;i<p1.length;i++){
+                    pass+=""+p1[i];
+                }
+                for (int i=0;i<p2.length;i++){
+                    passNueva+=""+p2[i];
+                }
+                try{
+                    pass1 = sql.getPass(usuario);
+                }catch(SQLException e) {}
+                if (pass.equals(pass1)){
+                    sql.actualizarPass(usuario,passNueva);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden o No Son Correctas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    jPasswordField1.setText("");
+                    jPasswordField2.setText("");
+                    jPasswordField3.setText("");
+                }
+                
+        }else{
+            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+            jPasswordField1.setText("");
+            jPasswordField2.setText("");
+            jPasswordField3.setText("");
+        }
+}//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

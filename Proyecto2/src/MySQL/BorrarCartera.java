@@ -6,6 +6,7 @@ package MySQL;
  */
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import java.sql.*;
 public class BorrarCartera extends javax.swing.JFrame {
     private ConexionMySQL sql;
     private String usuario;
@@ -131,14 +132,29 @@ public class BorrarCartera extends javax.swing.JFrame {
         boolean iguales;
         char[] p1 = jPasswordField1.getPassword();
         char[] p2 = jPasswordField2.getPassword();
+        String pass1 = "";
         if (p1.length != p2.length) {
             iguales = false;
         } else {
             iguales = Arrays.equals(p1,p2);
         }
         if (iguales){
-                sql.eliminarCartera(usuario);
-                this.dispose();
+                String pass = "";
+                for (int i=0;i<p1.length;i++){
+                    pass+=""+p1[i];
+                }
+                try{
+                    pass1 = sql.getPass(usuario);
+                }catch(SQLException e) {}
+                if (pass.equals(pass1)){
+                    sql.eliminarCartera(usuario);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden o No Son Correctas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    jPasswordField1.setText("");
+                    jPasswordField2.setText("");
+                }
+                
         }else{
             JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
             jPasswordField1.setText("");
