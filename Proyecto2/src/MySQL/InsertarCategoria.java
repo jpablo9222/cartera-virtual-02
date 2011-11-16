@@ -11,10 +11,12 @@ public class InsertarCategoria extends javax.swing.JFrame {
     private DefaultListModel modelo = new DefaultListModel();
     private ListModel modelo1;
     private ConexionMySQL sql;
+    private int numCamp;
     /** Creates new form InsertarCategoria */
     public InsertarCategoria() {
         initComponents();
         sql = GUICartera.getConexion();  
+        numCamp = 0;
     }
 
     /** This method is called from within the constructor to
@@ -181,9 +183,8 @@ public class InsertarCategoria extends javax.swing.JFrame {
         String[] tc = {"","","","","","",""};
         
         modelo1 = jList1.getModel();
-        for (int i=0;i<modelo1.getSize();i++){
-            tc[i] = ""+modelo1.getElementAt(i);
-            System.out.println(tc[i]);
+        for (int i=1;i<modelo1.getSize();i++){
+            tc[i-1] = ""+modelo1.getElementAt(i);
         }
         try{
             sql.insertarCategoria(nombreCat, tc[0], tc[1], tc[2], tc[3], tc[4], tc[5], tc[6]);
