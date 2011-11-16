@@ -22,12 +22,6 @@ public class GUICartera extends javax.swing.JFrame {
         sql.conectar();
         usuario1 = usuario;
         sql1 = sql;
-        try{
-            ArrayList<String> categorias = sql.getCategoria();
-            for (int i=0; i<categorias.size(); i++){
-                jComboBox1.addItem(categorias.get(i)); 
-            }
-        }catch (SQLException e){}
         new Login(this).setVisible(true);
     }
     
@@ -111,6 +105,14 @@ public class GUICartera extends javax.swing.JFrame {
         jLabel1.setText("Cuentas");
 
         jComboBox1.setToolTipText("Categorias");
+        jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jComboBox1MouseEntered(evt);
+            }
+        });
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -156,6 +158,11 @@ public class GUICartera extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Borrar Cartera");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Cambiar Contraseña");
@@ -271,6 +278,51 @@ public class GUICartera extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         new Busqueda().setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
+        boolean noExiste;
+        try{
+            ArrayList<String> categorias = sql.getCategoria();
+            System.out.println("mouse click");
+            for (int i=0; i<categorias.size(); i++){
+                noExiste = true;
+                for (int y=0; y<jComboBox1.getItemCount(); y++){
+                    String indice = ""+jComboBox1.getItemAt(y);
+                    if (indice.equalsIgnoreCase(categorias.get(i))){
+                        noExiste = false;
+                    }
+                }
+                if (noExiste){
+                    jComboBox1.addItem(categorias.get(i)); 
+                } 
+            }
+        }catch (SQLException e){}
+    }//GEN-LAST:event_jComboBox1MouseClicked
+
+    private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
+        boolean noExiste;
+        try{
+            ArrayList<String> categorias = sql.getCategoria();
+            System.out.println("mouse enterde");
+            for (int i=0; i<categorias.size(); i++){
+                noExiste = true;
+                for (int y=0; y<jComboBox1.getItemCount(); y++){
+                    String indice = ""+jComboBox1.getItemAt(y);
+                    if (indice.equalsIgnoreCase(categorias.get(i))){
+                        noExiste = false;
+                    }
+                }
+                if (noExiste){
+                    jComboBox1.addItem(categorias.get(i)); 
+                    System.out.println("entro a no Existe");
+                } 
+            }
+        }catch (SQLException e){}
+    }//GEN-LAST:event_jComboBox1MouseEntered
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
