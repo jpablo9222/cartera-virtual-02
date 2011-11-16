@@ -74,7 +74,6 @@ public class GUICartera extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -207,9 +206,6 @@ public class GUICartera extends javax.swing.JFrame {
             }
         });
         jMenu9.add(jMenuItem7);
-
-        jMenuItem8.setText("Agregar Campo");
-        jMenu9.add(jMenuItem8);
 
         jMenuBar1.add(jMenu9);
 
@@ -374,7 +370,6 @@ public class GUICartera extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

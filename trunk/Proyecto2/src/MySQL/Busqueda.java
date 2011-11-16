@@ -120,7 +120,6 @@ public class Busqueda extends javax.swing.JFrame {
             rs = sql.buscarTitulo(jTextField1.getText(), usuario);
             String cat = sql.getCategorias(jTextField1.getText(), usuario);
             if (!cat.equals("")){
-                int columnas = sql.verificar(cat);
                 String[] titulos = sql.mostrarT(cat);
                 for (int i=0; i<=titulos.length-1; i++){
                     modelo.addColumn(titulos[i]);
