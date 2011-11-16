@@ -34,7 +34,7 @@ public class Busqueda extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -42,24 +42,16 @@ public class Busqueda extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -126,7 +118,7 @@ public class Busqueda extends javax.swing.JFrame {
         modelo = new DefaultTableModel();
         try{
             rs = sql.buscarTitulo(jTextField1.getText(), usuario);
-            String cat = sql.getCategoria(jTextField1.getText(), usuario);
+            String cat = sql.getCategorias(jTextField1.getText(), usuario);
             if (!cat.equals("")){
                 int columnas = sql.verificar(cat);
                 String[] titulos = sql.mostrarT(cat);

@@ -57,6 +57,11 @@ public class InsertarCategoria extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Campos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "titulo", " " };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Agregar Campo");
@@ -154,7 +159,7 @@ public class InsertarCategoria extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +173,7 @@ public class InsertarCategoria extends javax.swing.JFrame {
         Object texto = jTextField1.getText();
         modelo.addElement(texto);
         jList1.setModel(modelo);
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -177,9 +183,11 @@ public class InsertarCategoria extends javax.swing.JFrame {
         modelo1 = jList1.getModel();
         for (int i=0;i<modelo1.getSize();i++){
             tc[i] = ""+modelo1.getElementAt(i);
+            System.out.println(tc[i]);
         }
         try{
             sql.insertarCategoria(nombreCat, tc[0], tc[1], tc[2], tc[3], tc[4], tc[5], tc[6]);
+            this.dispose();
         } catch (SQLException e){}
     }//GEN-LAST:event_jButton2ActionPerformed
 

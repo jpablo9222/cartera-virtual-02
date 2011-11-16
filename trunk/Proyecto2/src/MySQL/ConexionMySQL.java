@@ -82,10 +82,12 @@ public class ConexionMySQL {
        return categoria;
    }
    
-   public String getCategoria(String titulo, String usuario) throws SQLException
+   public String getCategorias(String titulo, String usuario) throws SQLException
    {
-       rs = stm.executeQuery("SELECT nombreCat FROM Categoria JOIN Cuenta ON Cuenta.categoria_id=Categoria.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+titulo+"' AND Usuario.usuario = '"+usuario+"'");    
+       rs = stm.executeQuery("SELECT nombreCat FROM Categoria JOIN Cuenta ON Cuenta.cat_id=Categoria.categoria_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+titulo+"' AND Usuario.usuario = '"+usuario+"'");    
+       System.out.println("entro al metodos");
        if (rs != null && rs.next()){
+           System.out.println(rs.getString(1));
            return rs.getString(1);
        } else {
            return "";
@@ -179,7 +181,7 @@ public class ConexionMySQL {
         rsC.next();
         int c = rsC.getInt(1);
         
-        stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",,"+ titulo +","+ c1 +","+ c2 +","+ c3 +","+ c4 +","+ c5 +","+ c6 +","+ c7 +")"); 
+        stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
    }
    
    /**
@@ -196,7 +198,7 @@ public class ConexionMySQL {
     */
    public void insertarCategoria(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7) throws SQLException
    {
-       stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ("+ nombre +","+ tc1 +","+ tc2 +","+ tc3 +","+ tc4 +","+ tc5 +","+ tc6 +","+ tc7 +")");
+       stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ('"+ nombre +"','"+ tc1 +"','"+ tc2 +"','"+ tc3 +"','"+ tc4 +"','"+ tc5 +"','"+ tc6 +"','"+ tc7 +"')");
    }
    
    /**
@@ -207,7 +209,7 @@ public class ConexionMySQL {
     */
    public void insertarUsuario(String user, String pass) throws SQLException
    {
-       stm.execute("INSERT INTO Usuario (usuario,contrasenia) VALUES ("+ user +","+ pass +")");
+       stm.execute("INSERT INTO Usuario (usuario,contrasenia) VALUES ('"+ user +"','"+ pass +"')");
    }
    
    /**
