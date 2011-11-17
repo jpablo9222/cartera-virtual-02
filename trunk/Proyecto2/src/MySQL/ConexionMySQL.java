@@ -87,6 +87,18 @@ public class ConexionMySQL {
        return categoria;
    }
    
+   public ArrayList<String> getUsuario()
+   {
+       ArrayList<String> usuario = new ArrayList<String>();
+       try{
+           rs = stm.executeQuery("SELECT usuario FROM Usuario");
+           while (rs.next()){
+               usuario.add(rs.getString(1));
+           }
+       } catch (SQLException e){System.out.println("Error en getCategoria");}
+       return usuario;
+   }
+   
    public String getCategorias(String titulo, String usuario)
    {
        try{
