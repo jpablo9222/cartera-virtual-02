@@ -105,9 +105,6 @@ public class GUICartera extends javax.swing.JFrame {
 
         jComboBox1.setToolTipText("Categorias");
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jComboBox1MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jComboBox1MouseEntered(evt);
             }
@@ -236,8 +233,7 @@ public class GUICartera extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         modelo = new DefaultTableModel();
         try{
-            String index = ""+jComboBox1.getItemAt(0);
-            jComboBox1.getSelectedItem();
+            String index = (String)(jComboBox1.getSelectedItem());
             int columnas = sql.verificar(index);
             String[] titulos = sql.mostrarT(index);
             for (int i=0; i<=titulos.length-1; i++){
@@ -274,26 +270,6 @@ public class GUICartera extends javax.swing.JFrame {
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         new Busqueda().setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
-        boolean noExiste;
-        try{
-            ArrayList<String> categorias = sql.getCategoria();
-            System.out.println("mouse click");
-            for (int i=0; i<categorias.size(); i++){
-                noExiste = true;
-                for (int y=0; y<jComboBox1.getItemCount(); y++){
-                    String indice = ""+jComboBox1.getItemAt(y);
-                    if (indice.equalsIgnoreCase(categorias.get(i))){
-                        noExiste = false;
-                    }
-                }
-                if (noExiste){
-                    jComboBox1.addItem(categorias.get(i)); 
-                } 
-            }
-        }catch (SQLException e){}
-    }//GEN-LAST:event_jComboBox1MouseClicked
 
     private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
         boolean noExiste;

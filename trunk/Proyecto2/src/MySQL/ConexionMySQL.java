@@ -211,6 +211,11 @@ public class ConexionMySQL {
        stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ('"+ nombre +"','"+ tc1 +"','"+ tc2 +"','"+ tc3 +"','"+ tc4 +"','"+ tc5 +"','"+ tc6 +"','"+ tc7 +"')");
    }
    
+   public void insertarCampo(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7) throws SQLException
+   {
+       stm.execute("UPDATE Categoria SET tc1 = '"+ tc1 +"', tc2 = '"+ tc2 +"', tc3 = '"+ tc3 +"', tc4 = '"+ tc4 +"', tc5 = '"+ tc5 +"', tc6 = '"+ tc6 +"', tc7 = '"+ tc7 +"' WHERE nombreCat = '"+nombre+"'");
+   }
+   
    /**
     * Método que Ingresa un Nuevo Registro a la Tabla de Usuarios
     * @param user
