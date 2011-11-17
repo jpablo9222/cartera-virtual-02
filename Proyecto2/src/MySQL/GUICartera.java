@@ -273,23 +273,19 @@ public class GUICartera extends javax.swing.JFrame {
 
     private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
         boolean noExiste;
-        try{
-            ArrayList<String> categorias = sql.getCategoria();
-            System.out.println("mouse enterde");
-            for (int i=0; i<categorias.size(); i++){
-                noExiste = true;
-                for (int y=0; y<jComboBox1.getItemCount(); y++){
-                    String indice = ""+jComboBox1.getItemAt(y);
-                    if (indice.equalsIgnoreCase(categorias.get(i))){
-                        noExiste = false;
-                    }
+        ArrayList<String> categorias = sql.getCategoria();
+        for (int i=0; i<categorias.size(); i++){
+            noExiste = true;
+            for (int y=0; y<jComboBox1.getItemCount(); y++){
+                String indice = ""+jComboBox1.getItemAt(y);
+                if (indice.equalsIgnoreCase(categorias.get(i))){
+                    noExiste = false;
                 }
-                if (noExiste){
-                    jComboBox1.addItem(categorias.get(i)); 
-                    System.out.println("entro a no Existe");
-                } 
             }
-        }catch (SQLException e){}
+            if (noExiste){
+                jComboBox1.addItem(categorias.get(i)); 
+            } 
+        }
     }//GEN-LAST:event_jComboBox1MouseEntered
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

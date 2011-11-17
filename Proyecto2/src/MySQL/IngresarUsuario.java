@@ -5,7 +5,6 @@ package MySQL;
  * @author Juan Pablo
  */
 import java.util.Arrays;
-import java.sql.*;
 import javax.swing.JOptionPane;
 public class IngresarUsuario extends javax.swing.JFrame {
     private ConexionMySQL sql;
@@ -145,13 +144,11 @@ public class IngresarUsuario extends javax.swing.JFrame {
             iguales = Arrays.equals(p1,p2);
         }
         if (iguales){
-            try{
-                String pass = "";
-                for (int i=0;i<p1.length;i++){
-                    pass+=""+p1[i];
-                }
-                sql.insertarUsuario(jTextField1.getText(), pass);
-            } catch (SQLException e){}
+            String pass = "";
+            for (int i=0;i<p1.length;i++){
+                pass+=""+p1[i];
+            }
+            sql.insertarUsuario(jTextField1.getText(), pass);
         }else{
             JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextField1.setText("");

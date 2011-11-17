@@ -141,9 +141,7 @@ public class Login extends javax.swing.JFrame {
         for (int i=0;i<pas.length;i++){
             pass+=""+pas[i];
         }
-        try{
-            usuario = sql.login(jTextField1.getText(), pass);
-        } catch (SQLException e){}
+        usuario = sql.login(jTextField1.getText(), pass);
         if (usuario.equals("")){
             JOptionPane.showMessageDialog(this.jPanel1, "Usuario y/o Contraseña Incorrecta.\nPruebe de Nuevo", "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextField1.setText("");
