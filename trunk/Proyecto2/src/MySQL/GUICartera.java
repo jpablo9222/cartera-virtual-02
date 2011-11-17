@@ -4,51 +4,16 @@ package MySQL;
  *
  * @author Juan Pablo
  */
-import java.sql.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 public class GUICartera extends javax.swing.JFrame {
-    private static String[] campos = new String[7];
-    private ConexionMySQL sql;
-    private static ConexionMySQL sql1;
-    private ResultSet rs;
-    private String usuario;
-    private static String usuario1;
-    private DefaultTableModel modelo;
+    private ManejarCartera cartera;
     /** Creates new form GUICartera */
-    public GUICartera() {
+    public GUICartera(ManejarCartera cartera) {
         initComponents();
-        sql = new ConexionMySQL("localhost","root","pass","proyecto2");
-        sql.conectar();
-        usuario1 = usuario;
-        sql1 = sql;
-        new Login(this).setVisible(true);
+        this.cartera = cartera;
+        new Login(this,cartera).setVisible(true);
     }
-    
-    /**
-     * Método que Establece el Usuario del Programa
-     * @param user
-     */
-    public static void setUsuario(String user){
-        usuario1 = user;
-    }
-    
-    /**
-     * Método que Devuelve la Conexion a MySQL utilizada 
-     * @return
-     */
-    public static ConexionMySQL getConexion(){
-        return sql1;
-    }
-    
-    /**
-     * Método que Devuelve el Usuario Actual del Programa
-     * @return
-     */
-    public static String getUsuario(){
-        return usuario1;
-    }
-    
+       
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -74,6 +39,7 @@ public class GUICartera extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -162,6 +128,11 @@ public class GUICartera extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Cambiar Contraseña");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Cerrar Sesión");
@@ -204,6 +175,14 @@ public class GUICartera extends javax.swing.JFrame {
         });
         jMenu9.add(jMenuItem7);
 
+        jMenuItem8.setText("Nuevo Campo");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu9.add(jMenuItem8);
+
         jMenuBar1.add(jMenu9);
 
         jMenu3.setText("Ayuda");
@@ -227,53 +206,35 @@ public class GUICartera extends javax.swing.JFrame {
 
     
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        new InsertarCuenta().setVisible(true);
+        new InsertarCuenta(cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        modelo = new DefaultTableModel();
-        try{
-            String index = (String)(jComboBox1.getSelectedItem());
-            int columnas = sql.verificar(index);
-            String[] titulos = sql.mostrarT(index);
-            for (int i=0; i<=titulos.length-1; i++){
-                modelo.addColumn(titulos[i]);
-            }
-            rs = sql.mostrar(index,usuario1);
-            while (rs.next())
-            {
-                // Se crea un array que será una de las filas de la tabla.
-                Object [] fila = new Object[columnas+1]; // Hay tres columnas en la tabla
-                // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-                for (int i=0;i<(columnas+1);i++)
-                fila[i] = rs.getObject(i+1); 
-                // Se añade al modelo la fila completa.
-               modelo.addRow(fila);
-            }
-        }catch (SQLException e){} 
-        jTable1.setModel(modelo);
+        String index = (String)(jComboBox1.getSelectedItem());
+        System.out.println(index);
+        jTable1.setModel(cartera.mostrarInfo(cartera.getReg(index), index));
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        new InsertarCategoria().setVisible(true);
+        new InsertarCategoria(cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         this.setVisible(false);
-        new Login(this).setVisible(true);
+        new Login(this,cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        new IngresarUsuario().setVisible(true);
+        new IngresarUsuario(cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        new Busqueda().setVisible(true);
+        new Busqueda(cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
         boolean noExiste;
-        ArrayList<String> categorias = sql.getCategoria();
+        ArrayList<String> categorias = cartera.getCategoria();
         for (int i=0; i<categorias.size(); i++){
             noExiste = true;
             for (int y=0; y<jComboBox1.getItemCount(); y++){
@@ -289,44 +250,17 @@ public class GUICartera extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1MouseEntered
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        new BorrarCartera().setVisible(true);
+        new BorrarCartera(cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUICartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUICartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUICartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUICartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        new CambiarPass(cartera).setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        new InsertarCampo(cartera).setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-            public void run() {
-                new GUICartera().setVisible(false);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -342,6 +276,7 @@ public class GUICartera extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

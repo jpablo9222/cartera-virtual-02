@@ -6,18 +6,15 @@ package MySQL;
  */
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.sql.*;
 import java.util.ArrayList;
 public class InsertarCuenta extends javax.swing.JFrame {
-    private ConexionMySQL sql;
-    private String usuario;
+    private ManejarCartera cartera;
     JTextField[] textField = new JTextField[8];
     JLabel[] labels = new JLabel[8];
     /** Creates new form InsertarCuenta */
-    public InsertarCuenta() {
+    public InsertarCuenta(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();
-        usuario = GUICartera.getUsuario();
+        this.cartera = cartera;
         textField[0] = jTextField1; textField[1] = jTextField2;
         textField[2] = jTextField3; textField[3] = jTextField4;
         textField[4] = jTextField5; textField[5] = jTextField6;
@@ -32,7 +29,7 @@ public class InsertarCuenta extends javax.swing.JFrame {
             labels[i].setVisible(false);
         }
         
-        ArrayList<String> categorias = sql.getCategoria();
+        ArrayList<String> categorias = cartera.getCategoria();
         for (int i=0; i<categorias.size(); i++){
             jComboBox1.addItem(categorias.get(i)); 
         }
@@ -248,7 +245,7 @@ public class InsertarCuenta extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String categoria = ""+jComboBox1.getSelectedItem();
-        sql.insertarCuenta(categoria, usuario, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), jTextField7.getText(), jTextField8.getText());
+        cartera.ingresarCuenta(categoria, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), jTextField7.getText(), jTextField8.getText());
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -259,51 +256,15 @@ public class InsertarCuenta extends javax.swing.JFrame {
         }
         String index = ""+jComboBox1.getSelectedItem();
         System.out.println(index);
-        int columnas = sql.verificar(index);
+        int columnas = cartera.verificar(index);
         System.out.println(columnas);
-        String[] titulos = sql.mostrarT(index);
+        String[] titulos = cartera.getCampos(index);
         for (int i=0; i<titulos.length; i++){
             textField[i].setVisible(true);
             labels[i].setVisible(true);
             labels[i].setText(titulos[i]);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertarCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new InsertarCuenta().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

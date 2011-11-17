@@ -61,7 +61,7 @@ public class ConexionMySQL {
            int columnas = this.verificar(categoria);
            titulos = new String[columnas+1];
            titulos[0]="Titulo";
-           rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%' LIMIT 1");
+           rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat = '"+categoria+"' LIMIT 1");
            rs.next();
            for (int i=1; i<=columnas; i++){
                titulos[i] = rs.getString(i);
@@ -108,12 +108,25 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public ResultSet mostrar(String categoria, String usuario)
+   public ArrayList<ArrayList<Object>> mostrar(String categoria, String usuario)
    {
+       ArrayList<ArrayList<Object>> datos = new ArrayList<ArrayList<Object>>();
+       int columnas = verificar(categoria);
        try{
            rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Categoria.nombreCat = '"+categoria+"' AND Usuario.usuario = '"+usuario+"'");
+       
+           while (rs.next())
+           {
+               ArrayList<Object> reg = new ArrayList<Object>();
+               for (int i=0;i<(columnas+1);i++){
+                   reg.add(rs.getObject(i+1)); 
+               }
+                // Se añade al modelo la fila completa.
+
+               datos.add(reg);
+           }
        } catch (SQLException e){System.out.println("Error en Mostrar Datos");}
-       return rs;
+       return datos;
    }
    
    /**
@@ -123,12 +136,24 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public ResultSet buscarTitulo(String titulo, String usuario)
+   public ArrayList<ArrayList<Object>> buscarTitulo(String titulo, String usuario, String categoria)
    {
+       ArrayList<ArrayList<Object>> datos = new ArrayList<ArrayList<Object>>();
+       int columnas = verificar(categoria);
        try{
            rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+ titulo +"' AND Usuario.usuario = '"+ usuario +"'");
+           while (rs.next())
+           {
+               ArrayList<Object> reg = new ArrayList<Object>();
+               for (int i=0;i<(columnas+1);i++){
+                   reg.add(rs.getObject(i+1)); 
+               }
+                // Se añade al modelo la fila completa.
+
+               datos.add(reg);
+           }
        }catch(SQLException ex){System.out.println(ex);}
-       return rs;
+       return datos;
    }
    
    /**
@@ -140,6 +165,7 @@ public class ConexionMySQL {
     */
    public String login(String user, String pass)
    {
+       System.out.println(user+" "+pass);
        try{
            rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = '"+pass+"' LIMIT 1");
            if (rs != null && rs.next()){
@@ -208,8 +234,8 @@ public class ConexionMySQL {
            ResultSet rsC = stm.executeQuery("SELECT categoria_id FROM Categoria WHERE nombreCat = '"+ categoria +"' LIMIT 1");
            rsC.next();
            int c = rsC.getInt(1);
-       
-           stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
+           System.out.println("usuario"+u+", campo"+c);
+           stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+u+","+c+",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
        } catch (SQLException e){System.out.println("Error en Insertar Cuenta");} 
    }
    
@@ -260,7 +286,7 @@ public class ConexionMySQL {
    public void actualizarPass(String user, String pass)
     {
         try {
-            stm.execute("UPDATE Usuario SET contrasenia = '" + pass + "' WHERE usuario = "+ user +" ");
+            stm.execute("UPDATE Usuario SET contrasenia = '" + pass + "' WHERE usuario = '"+ user +"'");
         } catch (SQLException ex) {System.out.println("Error en Actualizar Pass");}
     }
    

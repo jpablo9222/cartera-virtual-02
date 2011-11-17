@@ -5,15 +5,14 @@ package MySQL;
  * @author Juan Pablo
  */
 import java.util.ArrayList;
-import java.sql.*;
 import javax.swing.JOptionPane;
 public class InsertarCampo extends javax.swing.JFrame {
-    private ConexionMySQL sql;
+    private ManejarCartera cartera;
     /** Creates new form InsertarCampo */
-    public InsertarCampo() {
+    public InsertarCampo(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();
-        ArrayList<String> categorias = sql.getCategoria();
+        this.cartera = cartera;
+        ArrayList<String> categorias = cartera.getCategoria();
         for (int i=0; i<categorias.size(); i++){
             jComboBox1.addItem(categorias.get(i)); 
         }
@@ -37,7 +36,7 @@ public class InsertarCampo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -53,6 +52,11 @@ public class InsertarCampo extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
 
         jButton3.setText("Cancelar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -127,63 +131,18 @@ public class InsertarCampo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String[] tc = {"tc1","tc2","tc3","tc4","tc5","tc6","tc7"};
         if (jTextField2.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Debe Ingresar Un Nombre Para el Nuevo Campo", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             String index = (String)(jComboBox1.getSelectedItem());
-            int columnas = sql.verificar(index);
-            if (columnas==7){
-                JOptionPane.showMessageDialog(rootPane, "Lo Sentimos, No Se Pueden Agregar Más Campos a Esa Categoria", "Limite de Campos", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                boolean insertar = true;
-                String[] titulos = sql.mostrarT(index);
-                for (int i=0;i<titulos.length;i++){
-                    if (titulos[i].equals("")&&(insertar)){
-                        titulos[i] = jTextField2.getText();
-                        insertar = false;
-                    }
-                }
-                sql.insertarCampo(index, titulos[1], titulos[2], titulos[3], titulos[4], titulos[5], titulos[6], titulos[7]);
-            }       
+            cartera.insertarCampo(index, jTextField2.getText());
+            this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertarCampo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertarCampo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertarCampo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertarCampo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new InsertarCampo().setVisible(true);
-            }
-        });
-    }
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
