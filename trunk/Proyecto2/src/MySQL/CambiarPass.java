@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * CambiarPass.java
- *
- * Created on 16/11/2011, 01:12:41 AM
- */
 package MySQL;
 
 /**
