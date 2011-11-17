@@ -245,7 +245,6 @@ public class ConexionMySQL {
            ResultSet rsC = stm.executeQuery("SELECT categoria_id FROM Categoria WHERE nombreCat = '"+ categoria +"' LIMIT 1");
            rsC.next();
            int c = rsC.getInt(1);
-           System.out.println("usuario"+u+", campo"+c);
            stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+u+","+c+",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
        } catch (SQLException e){System.out.println("Error en Insertar Cuenta");} 
    }
