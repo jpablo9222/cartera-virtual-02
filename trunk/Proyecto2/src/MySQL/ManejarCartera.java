@@ -15,7 +15,7 @@ public class ManejarCartera {
     
     public ManejarCartera()
     {
-        sql = new ConexionMySQL("localhost","root","pass","proyecto2");
+        sql = new ConexionMySQL("localhost","root","JAMB2091","proyecto2");
         sql.conectar();
     }
     
@@ -96,7 +96,14 @@ public class ManejarCartera {
             for (int i=0;i<p1.length;i++){
                 pass+=""+p1[i];
             }
-            sql.insertarUsuario(user, pass);
+            ArrayList<String> usuarioo = sql.getUsuario();
+            for (String usuario1:usuarioo){
+                if (usuario1.equals(user)){
+                    return false;
+                } else {
+                    sql.insertarUsuario(user, pass);
+                }
+            }
             return true;
         }else{
             return false;
@@ -160,12 +167,19 @@ public class ManejarCartera {
         return sql.login(user, pass);
     }
     
-    public void ingresarCat(String cat, ListModel modelo){
+    public boolean ingresarCat(String cat, ListModel modelo){
+        ArrayList<String> listaCat = sql.getCategoria();
+        for (String listaa:listaCat){
+            if (listaa.equals(cat)){
+                return false;
+            }
+        }
         String[] tc = {"","","","","","",""};
         for (int i=1;i<modelo.getSize();i++){
             tc[i-1] = ""+modelo.getElementAt(i);
         }
         sql.insertarCategoria(cat, tc[0], tc[1], tc[2], tc[3], tc[4], tc[5], tc[6]);
+        return true;
     }
     
     public void ingresarCuenta(String cat, String t1, String t2, String t3, String t4, String t5, String t6, String t7, String t8){

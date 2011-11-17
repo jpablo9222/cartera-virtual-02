@@ -4,6 +4,7 @@ package MySQL;
  *
  * @author Juan Pablo
  */
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 public class GUICartera extends javax.swing.JFrame {
     private ManejarCartera cartera;
@@ -211,7 +212,6 @@ public class GUICartera extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String index = (String)(jComboBox1.getSelectedItem());
-        System.out.println(index);
         jTable1.setModel(cartera.mostrarInfo(cartera.getReg(index), index));
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -221,6 +221,7 @@ public class GUICartera extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         this.setVisible(false);
+        jTable1.setModel(new DefaultTableModel());
         new Login(this,cartera).setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
