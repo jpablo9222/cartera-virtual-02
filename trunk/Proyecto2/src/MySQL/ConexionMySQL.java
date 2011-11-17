@@ -177,7 +177,6 @@ public class ConexionMySQL {
     */
    public String login(String user, String pass)
    {
-       System.out.println(user+" "+pass);
        try{
            rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = '"+pass+"' LIMIT 1");
            if (rs != null && rs.next()){
@@ -267,7 +266,7 @@ public class ConexionMySQL {
    {
        try{
            stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ('"+ nombre +"','"+ tc1 +"','"+ tc2 +"','"+ tc3 +"','"+ tc4 +"','"+ tc5 +"','"+ tc6 +"','"+ tc7 +"')");
-       } catch (SQLException e){System.out.println("Error en Insertar Categoria");}    
+       } catch (SQLException e){System.out.println("Error en Insertar Categoria\n");e.printStackTrace();}    
    }
    
    public void insertarCampo(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7)
