@@ -135,7 +135,7 @@ public class IngresarUsuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!cartera.ingresarUsuario(jPasswordField1.getPassword(), jPasswordField2.getPassword(), jTextField1.getText())){
-            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden, O El Usuario Ya Existe", "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextField1.setText("");
             jPasswordField1.setText("");
             jPasswordField2.setText("");

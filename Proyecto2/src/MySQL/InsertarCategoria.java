@@ -178,7 +178,12 @@ public class InsertarCategoria extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String nombreCat = jTextField2.getText();
         modelo1 = jList1.getModel();
-        cartera.ingresarCat(nombreCat, modelo1);
+        if (cartera.ingresarCat(nombreCat, modelo1)){
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this.jPanel1, "Categoria Ya Existente", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
