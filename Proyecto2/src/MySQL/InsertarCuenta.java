@@ -257,7 +257,7 @@ public class InsertarCuenta extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         try{
-            String index = ""+jComboBox1.getItemAt(0);
+            String index = (String)(jComboBox1.getSelectedItem());
             int columnas = sql.verificar(index);
             String[] titulos = sql.mostrarT(index);
             for (int i=0; i<=titulos.length-1; i++){
