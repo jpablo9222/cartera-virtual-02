@@ -6,16 +6,15 @@ package MySQL;
  */
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+import javax.swing.JOptionPane;
 public class InsertarCategoria extends javax.swing.JFrame {
+    private ManejarCartera cartera;
     private DefaultListModel modelo = new DefaultListModel();
     private ListModel modelo1;
-    private ConexionMySQL sql;
-    private int numCamp;
     /** Creates new form InsertarCategoria */
-    public InsertarCategoria() {
+    public InsertarCategoria(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();  
-        numCamp = 0;
+        this.cartera = cartera;
         modelo.addElement("Titulo");
         jList1.setModel(modelo);
     }
@@ -166,63 +165,25 @@ public class InsertarCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Object texto = jTextField1.getText();
-        modelo.addElement(texto);
-        jList1.setModel(modelo);
+        if (modelo.getSize()==7){
+            JOptionPane.showMessageDialog(this.jPanel1, "No Puede Ingresar Más Campos", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Object texto = jTextField1.getText();
+            modelo.addElement(texto);
+            jList1.setModel(modelo);
+        }
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String nombreCat = jTextField2.getText();
-        String[] tc = {"","","","","","",""};
-        
         modelo1 = jList1.getModel();
-        for (int i=1;i<modelo1.getSize();i++){
-            tc[i-1] = ""+modelo1.getElementAt(i);
-        }
-        sql.insertarCategoria(nombreCat, tc[0], tc[1], tc[2], tc[3], tc[4], tc[5], tc[6]);
-        this.dispose();
+        cartera.ingresarCat(nombreCat, modelo1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertarCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new InsertarCategoria().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

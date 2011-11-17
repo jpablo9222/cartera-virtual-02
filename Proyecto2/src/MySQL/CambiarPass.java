@@ -4,17 +4,13 @@ package MySQL;
  *
  * @author Juan Pablo
  */
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import java.sql.*;
 public class CambiarPass extends javax.swing.JFrame {
-    private ConexionMySQL sql;
-    private String usuario;
+    private ManejarCartera cartera;
     /** Creates new form CambiarPass */
-    public CambiarPass() {
+    public CambiarPass(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();
-        usuario = GUICartera.getUsuario();
+        this.cartera = cartera;
     }
 
     /** This method is called from within the constructor to
@@ -45,7 +41,7 @@ public class CambiarPass extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Borrar Cartera");
+        jLabel1.setText("Cambiar Constraseña");
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -63,6 +59,11 @@ public class CambiarPass extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,9 +75,6 @@ public class CambiarPass extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -99,6 +97,10 @@ public class CambiarPass extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(jButton2)))
                 .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jLabel1)
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,79 +141,19 @@ public class CambiarPass extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    boolean iguales;
-        char[] p1 = jPasswordField1.getPassword();
-        char[] p2 = jPasswordField2.getPassword();
-        char[] p3 = jPasswordField3.getPassword();
-        String pass1 = "";
-        if (p2.length != p3.length) {
-            iguales = false;
-        } else {
-            iguales = Arrays.equals(p2,p3);
-        }
-        if (iguales){
-                String pass = "";
-                String passNueva = "";
-                for (int i=0;i<p1.length;i++){
-                    pass+=""+p1[i];
-                }
-                for (int i=0;i<p2.length;i++){
-                    passNueva+=""+p2[i];
-                }
-                pass1 = sql.getPass(usuario);
-                if (pass.equals(pass1)){
-                    sql.actualizarPass(usuario,passNueva);
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden o No Son Correctas", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    jPasswordField1.setText("");
-                    jPasswordField2.setText("");
-                    jPasswordField3.setText("");
-                }
-                
-        }else{
-            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
-            jPasswordField1.setText("");
-            jPasswordField2.setText("");
-            jPasswordField3.setText("");
-        }
+    if (!cartera.cambiarPass(jPasswordField1.getPassword(),jPasswordField2.getPassword(),jPasswordField3.getPassword())){
+        JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+        jPasswordField1.setText("");
+        jPasswordField2.setText("");
+        jPasswordField3.setText("");
+    }else{
+        this.dispose();
+    }
 }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CambiarPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CambiarPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CambiarPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CambiarPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new CambiarPass().setVisible(true);
-            }
-        });
-    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

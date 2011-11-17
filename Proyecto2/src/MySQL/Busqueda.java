@@ -4,18 +4,12 @@ package MySQL;
  *
  * @author Juan Pablo
  */
-import java.sql.*;
-import javax.swing.table.DefaultTableModel;
 public class Busqueda extends javax.swing.JFrame {
-    private ConexionMySQL sql;
-    private String usuario;
-    private ResultSet rs;
-    private DefaultTableModel modelo;
+    private ManejarCartera cartera;
     /** Creates new form Busqueda */
-    public Busqueda() {
+    public Busqueda(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();
-        usuario = GUICartera.getUsuario();
+        this.cartera = cartera;
     }
 
     /** This method is called from within the constructor to
@@ -115,67 +109,9 @@ public class Busqueda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        modelo = new DefaultTableModel();
-        try{
-            rs = sql.buscarTitulo(jTextField1.getText(), usuario);
-            String cat = sql.getCategorias(jTextField1.getText(), usuario);
-            if (!cat.equals("")){
-                String[] titulos = sql.mostrarT(cat);
-                for (int i=0; i<=titulos.length-1; i++){
-                    modelo.addColumn(titulos[i]);
-                }
-                rs = sql.mostrar(cat,usuario);
-                while (rs.next())
-                {
-                    // Se crea un array que será una de las filas de la tabla.
-                    Object [] fila = new Object[titulos.length]; // Hay tres columnas en la tabla
-                    // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-                    for (int i=0;i<(titulos.length);i++)
-                    fila[i] = rs.getObject(i+1); 
-                    // Se añade al modelo la fila completa.
-                modelo.addRow(fila);
-                }
-            }
-            
-        }catch (SQLException e){} 
-        jTable1.setModel(modelo);
+        String cat = cartera.getCat(jTextField1.getText());
+        jTable1.setModel(cartera.mostrarInfo(cartera.getBusqueda(jTextField1.getText(), cat), cat));
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Busqueda().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

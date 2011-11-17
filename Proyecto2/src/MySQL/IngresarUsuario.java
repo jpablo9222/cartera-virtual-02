@@ -4,14 +4,13 @@ package MySQL;
  *
  * @author Juan Pablo
  */
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 public class IngresarUsuario extends javax.swing.JFrame {
-    private ConexionMySQL sql;
+    private ManejarCartera cartera;
     /** Creates new form IngresarUsuario */
-    public IngresarUsuario() {
+    public IngresarUsuario(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();  
+        this.cartera = cartera;
         jPasswordField2.setText("");
     }
 
@@ -135,63 +134,15 @@ public class IngresarUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean iguales;
-        char[] p1 = jPasswordField1.getPassword();
-        char[] p2 = jPasswordField2.getPassword();
-        if (p1.length != p2.length) {
-            iguales = false;
-        } else {
-            iguales = Arrays.equals(p1,p2);
-        }
-        if (iguales){
-            String pass = "";
-            for (int i=0;i<p1.length;i++){
-                pass+=""+p1[i];
-            }
-            sql.insertarUsuario(jTextField1.getText(), pass);
-        }else{
+        if (!cartera.ingresarUsuario(jPasswordField1.getPassword(), jPasswordField2.getPassword(), jTextField1.getText())){
             JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
             jTextField1.setText("");
             jPasswordField1.setText("");
             jPasswordField2.setText("");
+        }else{
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IngresarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IngresarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IngresarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IngresarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new IngresarUsuario().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

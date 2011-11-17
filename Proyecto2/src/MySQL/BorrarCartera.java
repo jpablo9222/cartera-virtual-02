@@ -4,17 +4,13 @@ package MySQL;
  *
  * @author Juan Pablo
  */
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import java.sql.*;
 public class BorrarCartera extends javax.swing.JFrame {
-    private ConexionMySQL sql;
-    private String usuario;
+    private ManejarCartera cartera;
     /** Creates new form BorrarCartera */
-    public BorrarCartera() {
+    public BorrarCartera(ManejarCartera cartera) {
         initComponents();
-        sql = GUICartera.getConexion();
-        usuario = GUICartera.getUsuario();
+        this.cartera = cartera;
     }
 
     /** This method is called from within the constructor to
@@ -129,76 +125,18 @@ public class BorrarCartera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean iguales;
-        char[] p1 = jPasswordField1.getPassword();
-        char[] p2 = jPasswordField2.getPassword();
-        String pass1 = "";
-        if (p1.length != p2.length) {
-            iguales = false;
-        } else {
-            iguales = Arrays.equals(p1,p2);
-        }
-        if (iguales){
-                String pass = "";
-                for (int i=0;i<p1.length;i++){
-                    pass+=""+p1[i];
-                }
-                pass1 = sql.getPass(usuario);
-                if (pass.equals(pass1)){
-                    sql.eliminarCartera(usuario);
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden o No Son Correctas", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    jPasswordField1.setText("");
-                    jPasswordField2.setText("");
-                }
-                
-        }else{
-            JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (!cartera.borrarInfo(jPasswordField1.getPassword(), jPasswordField2.getPassword())){   
+        JOptionPane.showMessageDialog(this.jPanel1, "Las Contraseñas Ingresadas No Coinciden", "ERROR", JOptionPane.ERROR_MESSAGE);
             jPasswordField1.setText("");
             jPasswordField2.setText("");
+        }else{
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BorrarCartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BorrarCartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BorrarCartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BorrarCartera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new BorrarCartera().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
