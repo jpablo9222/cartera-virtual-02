@@ -47,7 +47,6 @@ public class ManejarCartera {
                 // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
                 for (int i=0;i<(titulos.length);i++){
                     fila[i] = reg.get(i); 
-                    System.out.println(""+reg.get(i));
                 }
                 // Se añade al modelo la fila completa.
                modelo.addRow(fila);
@@ -112,7 +111,7 @@ public class ManejarCartera {
             boolean insertar = true;
             String[] titulos = {"","","","","","",""};
             String[] campos = sql.mostrarT(cat);
-            System.arraycopy(campos, 0, titulos, 0, campos.length);
+            System.arraycopy(campos, 1, titulos, 0, campos.length-1);
             for (int i=0;i<7;i++){
                 if (titulos[i].equals("")&&(insertar)){
                     titulos[i] = campo;
