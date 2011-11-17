@@ -143,9 +143,7 @@ public class BorrarCartera extends javax.swing.JFrame {
                 for (int i=0;i<p1.length;i++){
                     pass+=""+p1[i];
                 }
-                try{
-                    pass1 = sql.getPass(usuario);
-                }catch(SQLException e) {}
+                pass1 = sql.getPass(usuario);
                 if (pass.equals(pass1)){
                     sql.eliminarCartera(usuario);
                     this.dispose();

@@ -54,16 +54,19 @@ public class ConexionMySQL {
      * @return
      * @throws SQLException
      */
-    public String[] mostrarT(String categoria) throws SQLException
+    public String[] mostrarT(String categoria)
    {
-       int columnas = this.verificar(categoria);
-       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%' LIMIT 1");
-       rs.next();
-       String[] titulos = new String[columnas+1];
-       titulos[0]="Titulo";
-       for (int i=1; i<=columnas; i++){
-           titulos[i] = rs.getString(i);
-       }
+       String[] titulos = {};
+       try{
+           int columnas = this.verificar(categoria);
+           titulos = new String[columnas+1];
+           titulos[0]="Titulo";
+           rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat LIKE '%"+categoria+"%' LIMIT 1");
+           rs.next();
+           for (int i=1; i<=columnas; i++){
+               titulos[i] = rs.getString(i);
+           }
+       } catch (SQLException e){System.out.println("Error en Mostrar Titulo");}
        return titulos;
    }
    
@@ -72,26 +75,30 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public ArrayList<String> getCategoria() throws SQLException
+   public ArrayList<String> getCategoria()
    {
        ArrayList<String> categoria = new ArrayList<String>();
-       rs = stm.executeQuery("SELECT nombreCat FROM Categoria");
-       while (rs.next()){
-           categoria.add(rs.getString(1));
-       }
+       try{
+           rs = stm.executeQuery("SELECT nombreCat FROM Categoria");
+           while (rs.next()){
+               categoria.add(rs.getString(1));
+           }
+       } catch (SQLException e){System.out.println("Error en getCategoria");}
        return categoria;
    }
    
-   public String getCategorias(String titulo, String usuario) throws SQLException
+   public String getCategorias(String titulo, String usuario)
    {
-       rs = stm.executeQuery("SELECT nombreCat FROM Categoria JOIN Cuenta ON Cuenta.cat_id=Categoria.categoria_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+titulo+"' AND Usuario.usuario = '"+usuario+"'");    
-       System.out.println("entro al metodos");
-       if (rs != null && rs.next()){
-           System.out.println(rs.getString(1));
-           return rs.getString(1);
-       } else {
-           return "";
-       }
+       try{
+           rs = stm.executeQuery("SELECT nombreCat FROM Categoria JOIN Cuenta ON Cuenta.cat_id=Categoria.categoria_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+titulo+"' AND Usuario.usuario = '"+usuario+"'");    
+           if (rs != null && rs.next()){
+               System.out.println(rs.getString(1));
+               return rs.getString(1);
+           } else {
+               return "";
+           }
+       } catch (SQLException e){System.out.println("Error en getCategorias");}
+       return null;
    }
    
    /**
@@ -101,9 +108,11 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public ResultSet mostrar(String categoria, String usuario) throws SQLException
+   public ResultSet mostrar(String categoria, String usuario)
    {
-       rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Categoria.nombreCat = '"+categoria+"' AND Usuario.usuario = '"+usuario+"'");
+       try{
+           rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Categoria ON Categoria.categoria_id=Cuenta.cat_id JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Categoria.nombreCat = '"+categoria+"' AND Usuario.usuario = '"+usuario+"'");
+       } catch (SQLException e){System.out.println("Error en Mostrar Datos");}
        return rs;
    }
    
@@ -114,7 +123,7 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public ResultSet buscarTitulo(String titulo, String usuario) throws SQLException
+   public ResultSet buscarTitulo(String titulo, String usuario)
    {
        try{
            rs = stm.executeQuery("SELECT titulo,c1,c2,c3,c4,c5,c6,c7 FROM Cuenta JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id WHERE Cuenta.titulo = '"+ titulo +"' AND Usuario.usuario = '"+ usuario +"'");
@@ -129,24 +138,30 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public String login(String user, String pass) throws SQLException
+   public String login(String user, String pass)
    {
-       rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = '"+pass+"' LIMIT 1");
-       if (rs != null && rs.next()){
-           return user;
-       } else {
-           return "";
-       }
+       try{
+           rs = stm.executeQuery("SELECT usuario, contrasenia FROM Usuario WHERE usuario = '"+ user +"' AND contrasenia = '"+pass+"' LIMIT 1");
+           if (rs != null && rs.next()){
+               return user;
+           } else {
+               return "";
+           }
+       } catch (SQLException e){System.out.println("Error en Login");}
+       return "";
    }
    
-   public String getPass(String user) throws SQLException
+   public String getPass(String user)
    {
-       rs = stm.executeQuery("SELECT contrasenia FROM Usuario WHERE usuario = '"+ user +"' LIMIT 1");
-       if (rs != null && rs.next()){
-           return rs.getString(1);
-       } else {
-           return "";
-       }
+       try{
+           rs = stm.executeQuery("SELECT contrasenia FROM Usuario WHERE usuario = '"+ user +"' LIMIT 1");
+           if (rs != null && rs.next()){
+               return rs.getString(1);
+           } else {
+              return "";
+           }
+       } catch (SQLException e){System.out.println("Error en getPass");}
+       return "";
    }
    
    /**
@@ -155,16 +170,18 @@ public class ConexionMySQL {
     * @return
     * @throws SQLException
     */
-   public int verificar(String categoria) throws SQLException
+   public int verificar(String categoria)
    {
        int count = 0;
-       rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat = '"+categoria+"' LIMIT 1");
-       rs.next();
-       for (int i=1; i<=7; i++){
-           if (!rs.getString(i).equals("")){
-               count++;
+       try{
+           rs = stm.executeQuery("SELECT tc1,tc2,tc3,tc4,tc5,tc6,tc7 FROM Categoria WHERE nombreCat = '"+categoria+"' LIMIT 1");
+           rs.next();
+           for (int i=1; i<=7; i++){
+               if (!rs.getString(i).equals("")){
+                   count++;
+               }
            }
-       }
+       } catch (SQLException e){System.out.println("Error en Verificar Categoria");}
        return count;
    }
    
@@ -182,16 +199,18 @@ public class ConexionMySQL {
     * @param c7
     * @throws SQLException
     */
-   public void insertarCuenta(String categoria, String usuario, String titulo, String c1, String c2, String c3, String c4, String c5, String c6, String c7) throws SQLException
+   public void insertarCuenta(String categoria, String usuario, String titulo, String c1, String c2, String c3, String c4, String c5, String c6, String c7)
    {
-        ResultSet rsU = stm.executeQuery("SELECT usuario_id FROM Usuario WHERE usuario = '"+ usuario +"' LIMIT 1");
-        rsU.next();
-        int u = rsU.getInt(1);
-        ResultSet rsC = stm.executeQuery("SELECT categoria_id FROM Categoria WHERE nombreCat = '"+ categoria +"' LIMIT 1");
-        rsC.next();
-        int c = rsC.getInt(1);
-        
-        stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
+       try{ 
+           ResultSet rsU = stm.executeQuery("SELECT usuario_id FROM Usuario WHERE usuario = '"+ usuario +"' LIMIT 1");
+           rsU.next();
+           int u = rsU.getInt(1);
+           ResultSet rsC = stm.executeQuery("SELECT categoria_id FROM Categoria WHERE nombreCat = '"+ categoria +"' LIMIT 1");
+           rsC.next();
+           int c = rsC.getInt(1);
+       
+           stm.execute("INSERT INTO Cuenta (user_id,cat_id,titulo,c1,c2,c3,c4,c5,c6,c7) VALUES ("+ u +","+ c +",'"+ titulo +"','"+ c1 +"','"+ c2 +"','"+ c3 +"','"+ c4 +"','"+ c5 +"','"+ c6 +"','"+ c7 +"')"); 
+       } catch (SQLException e){System.out.println("Error en Insertar Cuenta");} 
    }
    
    /**
@@ -206,14 +225,18 @@ public class ConexionMySQL {
     * @param tc7
     * @throws SQLException
     */
-   public void insertarCategoria(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7) throws SQLException
+   public void insertarCategoria(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7)
    {
-       stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ('"+ nombre +"','"+ tc1 +"','"+ tc2 +"','"+ tc3 +"','"+ tc4 +"','"+ tc5 +"','"+ tc6 +"','"+ tc7 +"')");
+       try{
+           stm.execute("INSERT INTO Categoria (nombreCat,tc1,tc2,tc3,tc4,tc5,tc6,tc7) VALUES ('"+ nombre +"','"+ tc1 +"','"+ tc2 +"','"+ tc3 +"','"+ tc4 +"','"+ tc5 +"','"+ tc6 +"','"+ tc7 +"')");
+       } catch (SQLException e){System.out.println("Error en Insertar Categoria");}    
    }
    
-   public void insertarCampo(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7) throws SQLException
+   public void insertarCampo(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7)
    {
-       stm.execute("UPDATE Categoria SET tc1 = '"+ tc1 +"', tc2 = '"+ tc2 +"', tc3 = '"+ tc3 +"', tc4 = '"+ tc4 +"', tc5 = '"+ tc5 +"', tc6 = '"+ tc6 +"', tc7 = '"+ tc7 +"' WHERE nombreCat = '"+nombre+"'");
+       try{
+           stm.execute("UPDATE Categoria SET tc1 = '"+ tc1 +"', tc2 = '"+ tc2 +"', tc3 = '"+ tc3 +"', tc4 = '"+ tc4 +"', tc5 = '"+ tc5 +"', tc6 = '"+ tc6 +"', tc7 = '"+ tc7 +"' WHERE nombreCat = '"+nombre+"'");
+       } catch (SQLException e){System.out.println("Error en Insertar Campo");}
    }
    
    /**
@@ -222,9 +245,11 @@ public class ConexionMySQL {
     * @param pass
     * @throws SQLException
     */
-   public void insertarUsuario(String user, String pass) throws SQLException
+   public void insertarUsuario(String user, String pass)
    {
-       stm.execute("INSERT INTO Usuario (usuario,contrasenia) VALUES ('"+ user +"','"+ pass +"')");
+       try{
+           stm.execute("INSERT INTO Usuario (usuario,contrasenia) VALUES ('"+ user +"','"+ pass +"')");
+       } catch (SQLException e){System.out.println("Error en Insertar Usuario");}
    }
    
    /**
@@ -236,9 +261,7 @@ public class ConexionMySQL {
     {
         try {
             stm.execute("UPDATE Usuario SET contrasenia = '" + pass + "' WHERE usuario = "+ user +" ");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+        } catch (SQLException ex) {System.out.println("Error en Actualizar Pass");}
     }
    
    /**
@@ -249,8 +272,6 @@ public class ConexionMySQL {
    {
         try {
             stm.execute("DELETE Cuenta FROM Cuenta JOIN Usuario ON Usuario.usuario_id=Cuenta.user_id  WHERE Usuario.usuario = '" + user + "'");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+        } catch (SQLException ex) {System.out.println("Error en Eliminar Cartera");}
    }
 }

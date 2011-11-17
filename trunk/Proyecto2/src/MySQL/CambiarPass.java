@@ -158,9 +158,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 for (int i=0;i<p2.length;i++){
                     passNueva+=""+p2[i];
                 }
-                try{
-                    pass1 = sql.getPass(usuario);
-                }catch(SQLException e) {}
+                pass1 = sql.getPass(usuario);
                 if (pass.equals(pass1)){
                     sql.actualizarPass(usuario,passNueva);
                     this.dispose();

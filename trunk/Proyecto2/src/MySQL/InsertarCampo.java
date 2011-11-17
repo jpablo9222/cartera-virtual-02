@@ -13,12 +13,10 @@ public class InsertarCampo extends javax.swing.JFrame {
     public InsertarCampo() {
         initComponents();
         sql = GUICartera.getConexion();
-        try{
-            ArrayList<String> categorias = sql.getCategoria();
-            for (int i=0; i<categorias.size(); i++){
-                jComboBox1.addItem(categorias.get(i)); 
-            }
-        } catch (SQLException e){}
+        ArrayList<String> categorias = sql.getCategoria();
+        for (int i=0; i<categorias.size(); i++){
+            jComboBox1.addItem(categorias.get(i)); 
+        }
     }
 
     /** This method is called from within the constructor to
@@ -133,23 +131,21 @@ public class InsertarCampo extends javax.swing.JFrame {
         if (jTextField2.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Debe Ingresar Un Nombre Para el Nuevo Campo", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
-            try{
-                String index = (String)(jComboBox1.getSelectedItem());
-                int columnas = sql.verificar(index);
-                if (columnas==7){
-                    JOptionPane.showMessageDialog(rootPane, "Lo Sentimos, No Se Pueden Agregar Más Campos a Esa Categoria", "Limite de Campos", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    boolean insertar = true;
-                    String[] titulos = sql.mostrarT(index);
-                    for (int i=0;i<titulos.length;i++){
-                        if (titulos[i].equals("")&&(insertar)){
-                            titulos[i] = jTextField2.getText();
-                            insertar = false;
-                        }
+            String index = (String)(jComboBox1.getSelectedItem());
+            int columnas = sql.verificar(index);
+            if (columnas==7){
+                JOptionPane.showMessageDialog(rootPane, "Lo Sentimos, No Se Pueden Agregar Más Campos a Esa Categoria", "Limite de Campos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                boolean insertar = true;
+                String[] titulos = sql.mostrarT(index);
+                for (int i=0;i<titulos.length;i++){
+                    if (titulos[i].equals("")&&(insertar)){
+                        titulos[i] = jTextField2.getText();
+                        insertar = false;
                     }
-                    sql.insertarCampo(index, titulos[1], titulos[2], titulos[3], titulos[4], titulos[5], titulos[6], titulos[7]);
                 }
-            } catch (SQLException e){}
+                sql.insertarCampo(index, titulos[1], titulos[2], titulos[3], titulos[4], titulos[5], titulos[6], titulos[7]);
+            }       
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -32,12 +32,10 @@ public class InsertarCuenta extends javax.swing.JFrame {
             labels[i].setVisible(false);
         }
         
-        try{
-            ArrayList<String> categorias = sql.getCategoria();
-            for (int i=0; i<categorias.size(); i++){
-                jComboBox1.addItem(categorias.get(i)); 
-            }
-        } catch (SQLException e){}
+        ArrayList<String> categorias = sql.getCategoria();
+        for (int i=0; i<categorias.size(); i++){
+            jComboBox1.addItem(categorias.get(i)); 
+        }
     }
 
     /** This method is called from within the constructor to
@@ -250,22 +248,25 @@ public class InsertarCuenta extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String categoria = ""+jComboBox1.getSelectedItem();
-        try{
-            sql.insertarCuenta(categoria, usuario, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), jTextField7.getText(), jTextField8.getText());
-        }catch(SQLException e){}
+        sql.insertarCuenta(categoria, usuario, jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), jTextField7.getText(), jTextField8.getText());
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        try{
-            String index = (String)(jComboBox1.getSelectedItem());
-            int columnas = sql.verificar(index);
-            String[] titulos = sql.mostrarT(index);
-            for (int i=0; i<=titulos.length-1; i++){
-                textField[i].setVisible(true);
-                labels[i].setVisible(true);
-                labels[i].setText(titulos[i]);
-            }
-        } catch (SQLException e){}
+        for (int i=0; i<8;i++){
+            textField[i].setVisible(false);
+            labels[i].setVisible(false);
+        }
+        String index = ""+jComboBox1.getSelectedItem();
+        System.out.println(index);
+        int columnas = sql.verificar(index);
+        System.out.println(columnas);
+        String[] titulos = sql.mostrarT(index);
+        for (int i=0; i<titulos.length; i++){
+            textField[i].setVisible(true);
+            labels[i].setVisible(true);
+            labels[i].setText(titulos[i]);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
     
     /**
