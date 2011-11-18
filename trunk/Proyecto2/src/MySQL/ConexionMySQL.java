@@ -52,7 +52,6 @@ public class ConexionMySQL {
      * Método que Busca los Títulos de una Categoría y los Devuelve dentro de un Arreglo
      * @param categoria
      * @return
-     * @throws SQLException
      */
     public String[] mostrarT(String categoria)
    {
@@ -73,7 +72,6 @@ public class ConexionMySQL {
    /**
     * Método que Devuelve un ArrayList con todas las Categorias Existentes
     * @return
-    * @throws SQLException
     */
    public ArrayList<String> getCategoria()
    {
@@ -87,6 +85,10 @@ public class ConexionMySQL {
        return categoria;
    }
    
+   /**
+    * Método que Devuelve un ArrayList con todos los Usuarios Existentes.
+    * @return
+    */
    public ArrayList<String> getUsuario()
    {
        ArrayList<String> usuario = new ArrayList<String>();
@@ -99,6 +101,12 @@ public class ConexionMySQL {
        return usuario;
    }
    
+   /**
+    * Metodo que devuelve una Categoria en Especifico, Dado un Titulo de Cuento y Usuario especificos
+    * @param titulo
+    * @param usuario
+    * @return
+    */
    public String getCategorias(String titulo, String usuario)
    {
        try{
@@ -118,7 +126,6 @@ public class ConexionMySQL {
     * @param categoria
     * @param usuario
     * @return
-    * @throws SQLException
     */
    public ArrayList<ArrayList<Object>> mostrar(String categoria, String usuario)
    {
@@ -145,8 +152,8 @@ public class ConexionMySQL {
     * Método que Devuelve los Registros Asociados al Título de una Categoría y a un Usuario Específicos
     * @param titulo
     * @param usuario
+    * @param categoria 
     * @return
-    * @throws SQLException
     */
    public ArrayList<ArrayList<Object>> buscarTitulo(String titulo, String usuario, String categoria)
    {
@@ -173,7 +180,6 @@ public class ConexionMySQL {
     * @param user
     * @param pass
     * @return
-    * @throws SQLException
     */
    public String login(String user, String pass)
    {
@@ -188,6 +194,11 @@ public class ConexionMySQL {
        return "";
    }
    
+   /**
+    * Método que devuelve la contraseña de una Cuenta dado El nombre del usuario.
+    * @param user
+    * @return
+    */
    public String getPass(String user)
    {
        try{
@@ -205,7 +216,6 @@ public class ConexionMySQL {
     * Método que Verifica Cuantos Campos Utiliza una Categoria en Especifico
     * @param categoria
     * @return
-    * @throws SQLException
     */
    public int verificar(String categoria)
    {
@@ -234,7 +244,6 @@ public class ConexionMySQL {
     * @param c5
     * @param c6
     * @param c7
-    * @throws SQLException
     */
    public void insertarCuenta(String categoria, String usuario, String titulo, String c1, String c2, String c3, String c4, String c5, String c6, String c7)
    {
@@ -259,7 +268,6 @@ public class ConexionMySQL {
     * @param tc5
     * @param tc6
     * @param tc7
-    * @throws SQLException
     */
    public void insertarCategoria(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7)
    {
@@ -268,6 +276,17 @@ public class ConexionMySQL {
        } catch (SQLException e){System.out.println("Error en Insertar Categoria\n");e.printStackTrace();}    
    }
    
+   /**
+    * Método que Ingresa un Nuevo Valor a un Registro ya Existente de una Categoria
+    * @param nombre
+    * @param tc1
+    * @param tc2
+    * @param tc3
+    * @param tc4
+    * @param tc5
+    * @param tc6
+    * @param tc7
+    */
    public void insertarCampo(String nombre, String tc1, String tc2, String tc3, String tc4, String tc5, String tc6, String tc7)
    {
        try{
@@ -279,7 +298,6 @@ public class ConexionMySQL {
     * Método que Ingresa un Nuevo Registro a la Tabla de Usuarios
     * @param user
     * @param pass
-    * @throws SQLException
     */
    public void insertarUsuario(String user, String pass)
    {

@@ -11,7 +11,10 @@ public class InsertarCategoria extends javax.swing.JFrame {
     private ManejarCartera cartera;
     private DefaultListModel modelo = new DefaultListModel();
     private ListModel modelo1;
-    /** Creates new form InsertarCategoria */
+    /**
+     * Crea un Nuevo Formulario para Ingresar una Nueva Categoria
+     * @param cartera 
+     */
     public InsertarCategoria(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

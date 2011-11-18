@@ -1,5 +1,4 @@
 package MySQL;
-
 /**
  *
  * @author Juan Pablo
@@ -7,7 +6,10 @@ package MySQL;
 import javax.swing.JOptionPane;
 public class CambiarPass extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form CambiarPass */
+    /** 
+     * Crea un Formulario para Cambiar Contraseñas del Usuario
+     * @param cartera 
+     */
     public CambiarPass(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

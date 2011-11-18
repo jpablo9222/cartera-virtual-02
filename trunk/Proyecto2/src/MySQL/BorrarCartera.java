@@ -7,7 +7,10 @@ package MySQL;
 import javax.swing.JOptionPane;
 public class BorrarCartera extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form BorrarCartera */
+    /** 
+     * Crea un Nuevo Formulario para Borrar Cartera
+     * @param cartera 
+     */
     public BorrarCartera(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

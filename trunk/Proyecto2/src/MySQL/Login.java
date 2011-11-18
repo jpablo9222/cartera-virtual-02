@@ -9,7 +9,9 @@ public class Login extends javax.swing.JFrame {
     private ManejarCartera cartera;
     private String usuario;
     private GUICartera carteraa;
-    /** Creates new form Login
+    /**
+     * Crea un Nuevo Formulario para Ingresar a una Cuenta del Programa
+     * @param carteraa 
      * @param cartera 
      */
     public Login(GUICartera carteraa, ManejarCartera cartera) {

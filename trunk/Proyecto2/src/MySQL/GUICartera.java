@@ -8,7 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 public class GUICartera extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form GUICartera */
+    /** 
+     * Crea un Formulario para Manejar la Cartera
+     * @param cartera 
+     */
     public GUICartera(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;
