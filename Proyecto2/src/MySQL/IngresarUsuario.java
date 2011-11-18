@@ -7,7 +7,10 @@ package MySQL;
 import javax.swing.JOptionPane;
 public class IngresarUsuario extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form IngresarUsuario */
+    /** 
+     * Crea un Nuevo Formulario para Ingresar un Nuevo Usuario
+     * @param cartera 
+     */
     public IngresarUsuario(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

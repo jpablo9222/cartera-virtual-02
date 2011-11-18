@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class InsertarCampo extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form InsertarCampo */
+    /**
+     * Crea un Nuevo Formulario para Ingresar un Nuevo Campo
+     * @param cartera 
+     */
     public InsertarCampo(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

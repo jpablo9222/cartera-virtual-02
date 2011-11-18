@@ -6,7 +6,10 @@ package MySQL;
  */
 public class Busqueda extends javax.swing.JFrame {
     private ManejarCartera cartera;
-    /** Creates new form Busqueda */
+    /** 
+     * Crea un Nuevo Formulario para Realizar Una Busqueda de Cuenta por Titulo
+     * @param cartera 
+     */
     public Busqueda(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;

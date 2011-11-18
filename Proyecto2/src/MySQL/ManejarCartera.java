@@ -13,6 +13,9 @@ public class ManejarCartera {
     private String usuario;
     private DefaultTableModel modelo;
     
+    /**
+     * Método que crea un Nuevo Manejador de la Carpeta
+     */
     public ManejarCartera()
     {
         sql = new ConexionMySQL("localhost","root","JAMB2091","proyecto2");
@@ -27,14 +30,31 @@ public class ManejarCartera {
         usuario = user;
     }
     
+    /**
+     * Método que devuelve un ArrayList con los Registros de Cuenta de una Categoria Especifica
+     * @param cat
+     * @return
+     */
     public ArrayList<ArrayList<Object>> getReg(String cat){
         return sql.mostrar(cat,usuario);
     }
     
+    /**
+     * Método que devuelve un ArrayList con los Registros de Cuenta con respecto a un Titulo y a una Categoria en Especifico
+     * @param titulo
+     * @param cat
+     * @return
+     */
     public ArrayList<ArrayList<Object>> getBusqueda(String titulo, String cat){
         return sql.buscarTitulo(titulo, usuario, cat);
     }
     
+    /**
+     * Método que Devuleve un Model para una JTable
+     * @param registros
+     * @param cat
+     * @return
+     */
     public DefaultTableModel mostrarInfo(ArrayList<ArrayList<Object>> registros, String cat){
         modelo = new DefaultTableModel();
         String[] titulos = sql.mostrarT(cat);
@@ -54,6 +74,13 @@ public class ManejarCartera {
         return modelo;
     }
     
+    /**
+     * Método que Cambia la Contraseña de un Usuario, si Cumple con los Requerimientos
+     * @param p1
+     * @param p2
+     * @param p3
+     * @return
+     */
     public boolean cambiarPass(char[] p1, char[] p2, char[] p3){
         boolean iguales = true;
         String passActual;
@@ -84,6 +111,13 @@ public class ManejarCartera {
         
     }
     
+    /**
+     * Método que Ingresa un Nuevo Usuario
+     * @param p1
+     * @param p2
+     * @param user
+     * @return
+     */
     public boolean ingresarUsuario(char[] p1, char[] p2, String user){
         boolean iguales;
         if (p1.length != p2.length) {
@@ -110,6 +144,12 @@ public class ManejarCartera {
         }
     }
     
+    /**
+     * Método que Ingresa un Nuevo Campo, si cumple con los Requerimientos
+     * @param cat
+     * @param campo
+     * @return
+     */
     public boolean insertarCampo(String cat, String campo){
         int columnas = sql.verificar(cat);
         if (columnas==7){
@@ -130,6 +170,12 @@ public class ManejarCartera {
         }
     }
     
+    /**
+     * Método que Borra la INformación en la Cartera de un Usuario
+     * @param p1
+     * @param p2
+     * @return
+     */
     public boolean borrarInfo(char[] p1, char[] p2){
         boolean iguales;
         String passActual;
@@ -156,6 +202,12 @@ public class ManejarCartera {
         }
     }
     
+    /**
+     * Método que Ingresa a una cuenta de un Usuario, si se cumple con los Requerimientos
+     * @param user
+     * @param pas
+     * @return
+     */
     public String login(String user, char[] pas){
         String pass = "";
         for (int i=0;i<pas.length;i++){
@@ -167,6 +219,12 @@ public class ManejarCartera {
         return sql.login(user, pass);
     }
     
+    /**
+     * Método que Ingresa un Categoria, si se Cumple con los Requerimientos
+     * @param cat
+     * @param modelo
+     * @return
+     */
     public boolean ingresarCat(String cat, ListModel modelo){
         ArrayList<String> listaCat = sql.getCategoria();
         for (String listaa:listaCat){
@@ -182,22 +240,53 @@ public class ManejarCartera {
         return true;
     }
     
+    /**
+     * Método que Ingresa una Cuenta
+     * @param cat
+     * @param t1
+     * @param t2
+     * @param t3
+     * @param t4
+     * @param t5
+     * @param t6
+     * @param t7
+     * @param t8
+     */
     public void ingresarCuenta(String cat, String t1, String t2, String t3, String t4, String t5, String t6, String t7, String t8){
         sql.insertarCuenta(cat, usuario, t1, t2, t3, t4, t5, t6, t7, t8);
     }
     
+    /**
+     * Método que Verifica cuantos campos posee una Categoria
+     * @param cat
+     * @return
+     */
     public int verificar(String cat){
         return sql.verificar(cat);
     }
     
+    /**
+     * Método que Devuelve un String[] con los campos de una Categoria
+     * @param cat
+     * @return
+     */
     public String[] getCampos(String cat){
         return sql.mostrarT(cat);
     }
     
+    /**
+     * Método que Devuelve un ArrayList con las Categorias Existentes
+     * @return
+     */
     public ArrayList<String> getCategoria(){
         return sql.getCategoria();
     }
     
+    /**
+     * Método que Devuelve una Categoria, dado un Titulo de una Cuenta y un Usuario Especifico
+     * @param titulo
+     * @return
+     */
     public String getCat(String titulo){
         return sql.getCategorias(titulo, usuario);
     }

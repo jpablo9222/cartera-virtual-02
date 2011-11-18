@@ -6,6 +6,10 @@ package MySQL;
  * @author Juan Pablo
  */
 public class Principal {
+    /**
+     * Método con el que se hace correr al primer Frame
+     * @param args
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

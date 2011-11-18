@@ -11,7 +11,10 @@ public class InsertarCuenta extends javax.swing.JFrame {
     private ManejarCartera cartera;
     JTextField[] textField = new JTextField[8];
     JLabel[] labels = new JLabel[8];
-    /** Creates new form InsertarCuenta */
+    /** 
+     * Crea un Nuevo Formulario para Ingresar una Nueva Cuenta
+     * @param cartera 
+     */
     public InsertarCuenta(ManejarCartera cartera) {
         initComponents();
         this.cartera = cartera;
